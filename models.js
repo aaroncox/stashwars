@@ -47,6 +47,7 @@ Meteor.methods({
 		return Auctions.insert({
 			owner: this.userId,
 			title: options.title,
+			price: 0,
 			duration: options.duration
 		});
 	}
