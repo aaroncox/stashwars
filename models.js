@@ -40,7 +40,7 @@ Meteor.methods({
     if ( value > auction.price ) {
       Auctions.update( query, { $set: { price: value } } );
     } else {
-      throw new Meteor.Error(409,"Bid not high enough", {auction: auction, bid: options });
+      throw new Meteor.Error(409, "Bid not high enough", { auction: auction, bid: options });
     }
     return Bids.insert({
       auction: options.auction,
