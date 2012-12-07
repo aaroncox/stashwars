@@ -8,6 +8,11 @@ Template.auction_list.show = function () {
   return Session.get( "auction-page" );
 };
 
+Template.auction_page.bids = function() {
+  var bids = Bids.find({ auction: Session.get( "auction-id" ) });
+  return bids;
+};
+
 Template.auction_page.auction = function() {
   var auction = Auctions.findOne({ _id: Session.get( "auction-id" ) });
   console.log( auction );
@@ -23,10 +28,35 @@ Template.auction_page.show = function() {
   return Session.get( "auction-id" );
 };
 
+Template.auction_page.events({
+  'click .bid': function(event, template) {
+    var value = template.find("input[name='bid']").value;
+    Meteor.call("bid", {
+      value: value,
+      auction: Session.get( "auction-id" )
+    }, function (error, auction) {
+      console.log("bidresult", error, auction);
+    });
+  }
+})
+
+var bidSubscribe;
+
 window.onhashchange = function() {
   Session.set( "auction-page", location.hash.match(/auctions/) );
-  var idMatch = location.hash.match(/auction-([\w-]+)/);
-  Session.set( "auction-id", idMatch && idMatch[1] );
+
+  var idMatch = location.hash.match(/auction-([\w-]+)/),
+    auctionId = idMatch && idMatch[1];
+  if (Session.get("auction-id") !== auctionId || auctionId && !bidSubscribe) {
+    if (bidSubscribe) {
+      bidSubscribe.stop();
+      bidSubscribe = null;
+    }
+    if (auctionId) {
+      bidSubscribe = Meteor.subscribe( "auction-bids", auctionId );
+    }
+  }
+  Session.set( "auction-id", auctionId );
 };
 window.onhashchange();
 
@@ -55,9 +85,7 @@ var openCreateDialog = function () {
 };
 
 Template.nav.events({
-  'click .create': function() {
-    openCreateDialog();
-  }
+  'click .create': openCreateDialog
 });
 
 Template.create_dialog.show = function () {

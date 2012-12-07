@@ -92,6 +92,17 @@
 <template name="auction_page">
   {{#if show}}
     <h1>{{auction.title}}</h1>
+		<h3>Price: {{auction.price}}</h3>
+    {{#if error}}
+		<div class="alert alert-error">{{error}}</div>
+		{{/if}}
+		<input type="text" name="bid" value="0">
+		<button class="bid">Bid</button>
+		<ul>
+		{{#each bids}}
+			<li>{{value}}</li>
+		{{/each}}
+		</ul>
   {{/if}}
 </template>
 

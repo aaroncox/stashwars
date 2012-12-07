@@ -22,13 +22,27 @@ Bids = new Meteor.Collection("bids");
 //  }
 // });
 
-Bids.allow({
-	insert: function(userId, bid) {
-		return userId && bid.owner === userId;
-	}
-});
-
 Meteor.methods({
+  bid: function(options) {
+    var query = {
+          _id: options.auction
+        },
+        value = parseFloat( options.value ),
+        auction = Auctions.findOne(query);
+    if(!auction) {
+      throw new Meteor.Error(404, "Auction not found");
+    }
+    if ( value > auction.price ) {
+      Auctions.update( query, { $set: { price: value } } );
+    } else {
+      throw new Meteor.Error(409,"Bid not high enough", {auction: auction, bid: options });
+    }
+    return Bids.insert({
+      auction: options.auction,
+      owner: this.userId,
+      value: value
+    });
+  },
 	createAuction: function(options) {
 		return Auctions.insert({
 			owner: this.userId,
