@@ -84,7 +84,7 @@
     <h1>{{auction.title}}</h1>
 		<h3>Price: {{money auction.price}}</h3>
 		<h5># of Bids: {{auction.bids}}</h5>
-		<h5>Last Bid: {{auction.last_bid}}</h5>
+		<h5>Last Bid: {{timeago auction.last_bid}}</h5>
     {{#if error}}
 		<div class="alert alert-error">{{error}}</div>
 		{{/if}}
