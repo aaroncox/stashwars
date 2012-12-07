@@ -105,3 +105,39 @@
     <td>{{duration}}</td>
   </tr>
 </template>
+
+<template name="createDialog">
+  <div class="mask"> </div>
+  <div class="modal">
+    <div class="modal-header btn-primary">
+      <button type="button" class="close cancel">&times;</button>
+      <h3>Create an Auction</h3>
+    </div>
+
+    <div class="modal-body">
+      {{#if error}}
+        <div class="alert alert-error">{{error}}</div>
+      {{/if}}
+			<p>The first few pieces of information we need are a title for the auction, as well as how long you're going to be around to complete the transaction.</p>
+      <label>Descriptive Title</label>
+      <input type="text" class="title span5">
+			<label>Type of Auction</label>
+			<select class="type">
+				<option value="unid">Unidentified Items Auction</option>
+			</select>
+			<label>Length of Auction</label>
+			<select class="duration">
+				<option value="60">60 Minutes</option>
+				<option value="30">30 Minutes</option>
+				<option value="15">15 Minutes</option>
+			</select>
+			<h4>Next Steps...</h4>
+			<p>Clicking "Create" will not automatically start your auction. On the next screen, you will configure exactly what is part of this auction and any other options.</p>
+    </div>
+
+    <div class="modal-footer">
+      <a href="#" class="btn cancel">Cancel</a>
+      <a href="#" class="btn btn-primary save">Create</a>
+    </div>
+  </div>
+</template>
