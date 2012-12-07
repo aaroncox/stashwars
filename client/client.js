@@ -127,9 +127,14 @@ Template.create_dialog.events({
     var title = template.find(".title").value,
         duration = template.find(".duration").value;
     // Ensure the Title Length
-    if(!title.length) {
+    if(!title.trim().length) {
       Session.set("createError",
                   "Your auction needs a title.");
+    }
+    // Ensure the Title is atleast 4 characters
+    if(title.trim().length < 4) {
+      Session.set("createError",
+                  "Your auction title should be atleast 4 characters");      
     }
     // Ensure the Duration
     if(duration < 15) {
