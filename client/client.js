@@ -1,5 +1,10 @@
 Meteor.subscribe("auctions");
 
+// Configured Accounts UI to ask for Username, Email and Password
+Accounts.ui.config({
+  passwordSignupFields: 'USERNAME_AND_EMAIL'
+});
+
 Handlebars.registerHelper("money", function( value ) {
   var parsed = parseFloat(value).toFixed(0),
     len = parsed.length - 3;
@@ -7,6 +12,11 @@ Handlebars.registerHelper("money", function( value ) {
     parsed = parsed.substr( 0, len ) + "," + parsed.substr( len );
   }
   return parsed;
+});
+
+Handlebars.registerHelper("username", function( id ) {
+  var user = Meteor.users.findOne(id);
+  return user ? user.username : null;
 });
 
 Template.auction_list.all = function () {
