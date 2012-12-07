@@ -76,5 +76,23 @@
 </body>
 
 <template name="page">
+	{{> auction_list}}
+</template>
 
+<template name="auction_list">
+	<div class="auction_list">
+		<h4>Auctions</h4>
+		<table>
+		{{#each all}}
+	    {{> auction_row}}
+	  {{/each}}
+		</table>
+	</div>
+</template>
+
+<template name="auction_row">
+  <tr class="auction {{is_selected}}">
+    <td><span class="title">{{title}}</span></td>
+		<td>{{duration}}</td>
+  </tr>
 </template>
