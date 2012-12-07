@@ -3,6 +3,7 @@ Meteor.subscribe("auctions");
 Template.auction_list.all = function () {
   return Auctions.find({});
 };
+
 Template.auction_list.show = function () {
   return Session.get( "auction-page" );
 };
@@ -53,6 +54,12 @@ Template.page.events({
 Template.create_dialog.show = function () {
   return Session.get("showCreateDialog");
 };
+
+jQuery( document ).on( "keydown", function( event ) {
+  if (event.which === 27) {
+    Session.set("showCreateDialog", false);
+  }
+});
 
 Template.create_dialog.events({
   'click .save': function (event, template) {
