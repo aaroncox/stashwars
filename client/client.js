@@ -27,36 +27,10 @@ Template.auction_list.show = function () {
   return Session.get( "auction-page" );
 };
 
-Template.auction_page.bids = function() {
-  var bids = Bids.find({ auction: Session.get( "auction-id" ) }, {sort: {time: -1}});
-  return bids;
-};
-
-Template.auction_page.auction = function() {
-  var auction = Auctions.findOne({ _id: Session.get( "auction-id" ) });
-  return auction;
-};
-
 Template.nav.auction = function() {
   Session.get("auction-page");
   return Template.auction_page.auction();
 };
-
-Template.auction_page.show = function() {
-  return Session.get( "auction-id" );
-};
-
-Template.auction_page.events({
-  'click .bid': function(event, template) {
-    var value = template.find("input[name='bid']").value;
-    Meteor.call("bid", {
-      value: value,
-      auction: Session.get( "auction-id" )
-    }, function (error, auction) {
-      console.log("bidresult", error, auction);
-    });
-  }
-});
 
 var bidSubscribe;
 
@@ -83,7 +57,7 @@ Template.nav.rendered = function() {
     var elem = jQuery(this);
     elem.closest("li").toggleClass("active", this.hash == location.hash);
   });
-}
+};
 
 Template.page.rendered = function() {
   if (!this.onlyonce) {
@@ -133,7 +107,7 @@ Template.create_dialog.events({
     // Ensure the Title is atleast 4 characters
     if(title.trim().length < 4) {
       Session.set("createError",
-                  "Your auction title should be atleast 4 characters");      
+                  "Your auction title should be atleast 4 characters");
     }
     // Ensure the Duration
     if(duration < 15) {

@@ -66,7 +66,7 @@
     <ul class="nav">
       <li class="active"><a href="#">Home</a></li>
       <li><a href="#auctions">Auctions</a></li>
-			{{#if auction}} 
+			{{#if auction}}
 			<li><a href="#auction-{{auction._id}}">{{auction.title}}</a></li>
 			{{/if}}
     </ul>
@@ -85,14 +85,16 @@
 		<h3>Price: {{money auction.price}}</h3>
 		<h5># of Bids: {{auction.bids}}</h5>
 		<h5>Last Bid: {{timeago auction.last_bid}}</h5>
-    {{#if error}}
-		<div class="alert alert-error">{{error}}</div>
-		{{/if}}
-		<input type="text" name="bid" value="0">
-		<button class="bid">Bid</button>
+		<form class="bid">
+	    {{#if error}}
+			<div class="alert alert-error">{{error}}</div>
+			{{/if}}
+			<input type="text" name="bid" value="0">
+			<input type="submit" class="btn" value="Bid">
+		</form>
 		<ul>
 		{{#each bids}}
-			<li>{{money value}} by {{ownerName}}</li>	    
+			<li>{{money value}} by {{ownerName}}</li>
 		{{/each}}
 		</ul>
   {{/if}}
