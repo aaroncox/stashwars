@@ -34,7 +34,6 @@ Template.auction_page.bids = function() {
 
 Template.auction_page.auction = function() {
   var auction = Auctions.findOne({ _id: Session.get( "auction-id" ) });
-  console.log( auction );
   return auction;
 };
 
