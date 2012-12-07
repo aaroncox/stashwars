@@ -14,6 +14,11 @@ Template.auction_page.auction = function() {
   return auction;
 };
 
+Template.nav.auction = function() {
+  Session.get("auction-page");
+  return Template.auction_page.auction();
+};
+
 Template.auction_page.show = function() {
   return Session.get( "auction-id" );
 };
@@ -22,11 +27,15 @@ window.onhashchange = function() {
   Session.set( "auction-page", location.hash.match(/auctions/) );
   var idMatch = location.hash.match(/auction-([\w-]+)/);
   Session.set( "auction-id", idMatch && idMatch[1] );
+};
+window.onhashchange();
+
+Template.nav.rendered = function() {
   jQuery(".nav a").each(function(){
     var elem = jQuery(this);
     elem.closest("li").toggleClass("active", this.hash == location.hash);
   });
-};
+}
 
 Template.page.rendered = function() {
   if (!this.onlyonce) {
@@ -42,7 +51,7 @@ Template.page.rendered = function() {
 var openCreateDialog = function () {
   Session.set("createError", null);
   Session.set("showCreateDialog", true);
-  jQuery(Template.create_dialog.find(".modal")).removeClass("disabled");
+  // jQuery(Template.create_dialog.find(".modal")).removeClass("disabled");
 };
 
 Template.nav.events({
@@ -67,6 +76,7 @@ Template.create_dialog.events({
     if ( template.find(".modal.disabled") ) {
       return;
     }
+    Session.set("createError", null);
     var title = template.find(".title").value,
         duration = template.find(".duration").value;
     // Ensure the Title Length
