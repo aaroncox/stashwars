@@ -33,7 +33,7 @@ Meteor.methods({
 		return Auctions.insert({
 			owner: this.userId,
 			title: options.title,
-			duration: options.duration,
+			duration: options.duration
 		});
 	}
 });
