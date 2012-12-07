@@ -37,15 +37,7 @@
           <span class="icon-bar"></span>
         </a>
         <a class="brand" href="#">StashWars</a>
-        <div class="nav-collapse collapse">
-          <p class="navbar-text pull-right">
-            {{loginButtons}}
-          </p>
-          <ul class="nav">
-            <li class="active"><a href="#">Home</a></li>
-            <li><a href="#auctions">Auctions</a></li>
-          </ul>
-        </div><!--/.nav-collapse -->
+        {{> nav}}
       </div>
     </div>
   </div>
@@ -75,8 +67,21 @@
 
 </body>
 
+<template name="nav">
+  <div class="nav-collapse collapse">
+    <p class="navbar-text pull-right">
+      {{loginButtons}}
+    </p>
+    <ul class="nav">
+      <li class="active"><a href="#">Home</a></li>
+      <li><a href="#auctions">Auctions List</a></li>
+      <li><button class="btn create">Create Auction</button></li>
+
+    </ul>
+  </div><!--/.nav-collapse -->
+</template>
+
 <template name="page">
-  <button class="create">Create Auction</button>
   {{> auction_list}}
   {{> create_dialog}}
   {{> auction_page}}

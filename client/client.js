@@ -45,7 +45,7 @@ var openCreateDialog = function () {
   jQuery(Template.create_dialog.find(".modal")).removeClass("disabled");
 };
 
-Template.page.events({
+Template.nav.events({
   'click .create': function() {
     openCreateDialog();
   }
