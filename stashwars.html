@@ -100,10 +100,18 @@
   {{#if show}}
     <div class="auction_list">
       <h4>Auctions</h4>
-      <table>
-      {{#each all}}
-        {{> auction_row}}
-      {{/each}}
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Current Bid</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each all}}
+            {{> auction_row}}
+          {{/each}}
+        </tbody>
       </table>
     </div>
   {{/if}}
