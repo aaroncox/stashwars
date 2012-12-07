@@ -1,5 +1,5 @@
 Template.auction_page.bids = function() {
-	var bids = Bids.find({ auction: Session.get( "auction-id" ) });
+	var bids = Bids.find({ auction: Session.get( "auction-id" ) }, { sort: { time: -1 } });
 	return bids;
 };
 
