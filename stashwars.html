@@ -92,7 +92,7 @@
 <template name="auction_page">
   {{#if show}}
     <h1>{{auction.title}}</h1>
-		<h3>Price: {{auction.price}}</h3>
+		<h3>Price: {{money auction.price}}</h3>
     {{#if error}}
 		<div class="alert alert-error">{{error}}</div>
 		{{/if}}
@@ -100,7 +100,7 @@
 		<button class="bid">Bid</button>
 		<ul>
 		{{#each bids}}
-			<li>{{value}}</li>
+			<li>{{money value}}</li>
 		{{/each}}
 		</ul>
   {{/if}}
@@ -122,7 +122,7 @@
 <template name="auction_row">
   <tr class="auction {{is_selected}}">
     <td><a href="#auction-{{_id}}" class="title">{{title}}</span></td>
-    <td>{{duration}}</td>
+    <td>{{money price}}</td>
   </tr>
 </template>
 

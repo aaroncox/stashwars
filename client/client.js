@@ -1,5 +1,14 @@
 Meteor.subscribe("auctions");
 
+Handlebars.registerHelper("money", function( value ) {
+  var parsed = parseFloat(value).toFixed(0),
+    len = parsed.length - 3;
+  for ( ; len > 0; len -= 3) {
+    parsed = parsed.substr( 0, len ) + "," + parsed.substr( len );
+  }
+  return parsed;
+});
+
 Template.auction_list.all = function () {
   return Auctions.find({});
 };
@@ -38,7 +47,7 @@ Template.auction_page.events({
       console.log("bidresult", error, auction);
     });
   }
-})
+});
 
 var bidSubscribe;
 
