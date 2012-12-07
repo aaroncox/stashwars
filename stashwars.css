@@ -2,3 +2,6 @@
 .navbar-text {
   padding-right: 2em;
 }
+.modal.disabled {
+  opacity: 0.75;
+}
