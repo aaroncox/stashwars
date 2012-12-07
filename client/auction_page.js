@@ -1,8 +1,8 @@
-Template.auction_page.bids = function() {
+Template.auction_page_bid_info.bids = function() {
 	var bids = Bids.find({ auction: Session.get( "auction-id" ) }, { sort: { time: -1 } });
 	return bids;
 };
-
+Template.auction_page_bid_info.auction =
 Template.auction_page.auction = function() {
 	var auction = Auctions.findOne({ _id: Session.get( "auction-id" ) });
 	return auction;
