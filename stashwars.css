@@ -1,1 +1,4 @@
 /* CSS declarations go here */
+.navbar-text {
+  padding-right: 2em;
+}
