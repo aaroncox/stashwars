@@ -1,5 +1,12 @@
 Meteor.subscribe("auctions");
 
+Meteor.autosubscribe(function() {
+  var auctionId = Session.get("auction-id");
+  if ( auctionId ) {
+    Meteor.subscribe("auction-bids", auctionId);
+  }
+});
+
 // Configured Accounts UI to ask for Username, Email and Password
 Accounts.ui.config({
   passwordSignupFields: 'USERNAME_AND_EMAIL'
@@ -32,25 +39,24 @@ Template.nav.auction = function() {
   return Template.auction_page.auction();
 };
 
-var bidSubscribe;
+// var bidSubscribe;
 
-window.onhashchange = function() {
-  Session.set( "auction-page", location.hash.match(/auctions/) );
+// window.onhashchange = function() {
+//   Session.set( "auction-page", location.hash.match(/auctions/) );
 
-  var idMatch = location.hash.match(/auction-([\w-]+)/),
-    auctionId = idMatch && idMatch[1];
-  if (Session.get("auction-id") !== auctionId || auctionId && !bidSubscribe) {
-    if (bidSubscribe) {
-      bidSubscribe.stop();
-      bidSubscribe = null;
-    }
-    if (auctionId) {
-      bidSubscribe = Meteor.subscribe( "auction-bids", auctionId );
-    }
-  }
-  Session.set( "auction-id", auctionId );
-};
-window.onhashchange();
+//   var idMatch = location.hash.match(/auction-([\w-]+)/),
+//     auctionId = idMatch && idMatch[1];
+//   if (Session.get("auction-id") !== auctionId || auctionId && !bidSubscribe) {
+//     if (bidSubscribe) {
+//       bidSubscribe.stop();
+//       bidSubscribe = null;
+//     }
+//     if (auctionId) {
+//       bidSubscribe = Meteor.subscribe( "auction-bids", auctionId );
+//     }
+//   }
+//   Session.set( "auction-id", auctionId );
+// };
 
 Template.nav.rendered = function() {
   jQuery(".nav a").each(function(){
@@ -58,14 +64,6 @@ Template.nav.rendered = function() {
     elem.closest("li").toggleClass("active", this.hash == location.hash);
   });
 };
-
-Template.page.rendered = function() {
-  if (!this.onlyonce) {
-    this.onlyonce = true;
-    window.onhashchange();
-  }
-};
-
 
 ///////////////////////////////////////////////////////////////////////////////
 // Create Auction Dialog

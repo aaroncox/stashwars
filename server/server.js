@@ -7,7 +7,7 @@ Meteor.publish("auction-bids", function( auctionId ) {
 });
 
 Meteor.methods({
-		bid: function(options) {
+	bid: function(options) {
 		var query = {
 					_id: options.auction
 				},
