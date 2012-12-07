@@ -54,6 +54,7 @@ Meteor.methods({
     return Bids.insert({
       auction: options.auction,
       owner: this.userId,
+      ownerName: Meteor.user().username,
       value: value,
       time: timestamp
     });
