@@ -3,5 +3,5 @@ Meteor.publish("auctions", function () {
 });
 
 Meteor.publish("auction-bids", function( auctionId ) {
-  return Bids.find({ auction: auctionId }, {limit: 20, sort: {time: -1}});
+  return Bids.find({ auction: auctionId }, {limit: 20});
 });
