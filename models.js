@@ -28,7 +28,8 @@ Meteor.methods({
           _id: options.auction
         },
         value = parseFloat( options.value ),
-        auction = Auctions.findOne(query);
+        auction = Auctions.findOne(query),
+        timestamp = new Date().getTime();
     // Require that the Auction exists
     if(!auction) {
       throw new Meteor.Error(404, "Auction not found");
@@ -38,14 +39,23 @@ Meteor.methods({
       throw new Meteor.Error(500, "You must be logged in to bid on auctions.");
     }
     if ( value > auction.price ) {
-      Auctions.update( query, { $set: { price: value } } );
+      Auctions.update( query, { 
+        $set: { 
+          price: value,
+          last_bid: timestamp
+        },
+        $inc: { 
+          bids: 1
+        },
+      } );
     } else {
       throw new Meteor.Error(409, "Bid not high enough", { auction: auction, bid: options });
     }
     return Bids.insert({
       auction: options.auction,
       owner: this.userId,
-      value: value
+      value: value,
+      time: timestamp
     });
   },
 	createAuction: function(options) {
@@ -53,6 +63,7 @@ Meteor.methods({
 			owner: this.userId,
 			title: options.title,
 			price: 0,
+			bids: 0,
 			duration: options.duration
 		});
 	}

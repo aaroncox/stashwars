@@ -83,6 +83,8 @@
   {{#if show}}
     <h1>{{auction.title}}</h1>
 		<h3>Price: {{money auction.price}}</h3>
+		<h5># of Bids: {{auction.bids}}</h5>
+		<h5>Last Bid: {{auction.last_bid}}</h5>
     {{#if error}}
 		<div class="alert alert-error">{{error}}</div>
 		{{/if}}
@@ -105,6 +107,8 @@
           <tr>
             <th>Name</th>
             <th>Current Bid</th>
+            <th># of Bids</th>
+            <th>Last Bid</th>
           </tr>
         </thead>
         <tbody>
@@ -121,6 +125,8 @@
   <tr class="auction {{is_selected}}">
     <td><a href="#auction-{{_id}}" class="title">{{title}}</span></td>
     <td>{{money price}}</td>
+    <td>{{bids}}</td>
+    <td>{{last_bid}}</td>
   </tr>
 </template>
 
