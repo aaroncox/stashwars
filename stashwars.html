@@ -77,22 +77,31 @@
 
 <template name="page">
   {{> auction_list}}
+  {{> auction_page}}
+</template>
+
+<template name="auction_page">
+  {{#if show}}
+    <h1>{{auction.title}}</h1>
+  {{/if}}
 </template>
 
 <template name="auction_list">
-  <div class="auction_list">
-    <h4>Auctions</h4>
-    <table>
-    {{#each all}}
-      {{> auction_row}}
-    {{/each}}
-    </table>
-  </div>
+  {{#if show}}
+    <div class="auction_list">
+      <h4>Auctions</h4>
+      <table>
+      {{#each all}}
+        {{> auction_row}}
+      {{/each}}
+      </table>
+    </div>
+  {{/if}}
 </template>
 
 <template name="auction_row">
   <tr class="auction {{is_selected}}">
-    <td><span class="title">{{title}}</span></td>
+    <td><a href="#auction-{{_id}}" class="title">{{title}}</span></td>
     <td>{{duration}}</td>
   </tr>
 </template>
