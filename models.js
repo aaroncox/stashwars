@@ -29,8 +29,13 @@ Meteor.methods({
         },
         value = parseFloat( options.value ),
         auction = Auctions.findOne(query);
+    // Require that the Auction exists
     if(!auction) {
       throw new Meteor.Error(404, "Auction not found");
+    }
+    // Require that the User be logged in to bid.
+    if(!this.userId) {
+      throw new Meteor.Error(500, "You must be logged in to bid on auctions.");
     }
     if ( value > auction.price ) {
       Auctions.update( query, { $set: { price: value } } );
