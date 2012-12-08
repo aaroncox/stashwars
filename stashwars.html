@@ -69,8 +69,12 @@
       {{loginButtons}}
     </p>
     <ul class="nav">
-			<li><a class="local" href="/auctions">Auctions</a></li>
-			<li><a class="local" href="/bids">Bids</a></li>
+      {{! Look into nav.js for more detail}}
+      {{#each nav_links}}
+      <li><a class="local {{active}}" href="{{href}}">{{name}}</a></li>
+      {{/each}}
+			<li><a class="local" href="/auctions" data-templ="auction_list">Auctions</a></li>
+			<li><a class="local" href="/bids" data-templ="bids_page">Bids</a></li>
 			{{#if auction}}
 			<li><a class="local" href="/auction/{{auction._id}}">{{auction.title}}</a></li>
 			{{/if}}
