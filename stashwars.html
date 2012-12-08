@@ -193,17 +193,27 @@
 
 <template name="auction_editor">
 	{{#if isOwner}}
+	<div class="alert alert-info">
 		<form>
 			<fieldset>
-		    <legend>Auction Controls</legend>
-		    <label>Pick an Unidentified Item...</label>
-				{{> item_select}}		  	
-		    <label>and pick how many...</label>
-				<input type="text" placeholder="Quantity">
-				<span class="help-block">This will add Xx ITEM_NAME to the auction.</span>
-		    <button type="submit" class="btn">Submit</button>
+				<legend>Auction Controls</legend>
+				<div class="row-fluid">
+				  <div class="span4">
+				    <label>Pick an Unidentified Item...</label>
+						{{> item_select}}		  					  	
+				  </div>
+				  <div class="span4">
+				    <label>and pick how many...</label>
+						<input type="text" placeholder="Quantity">
+				  </div>
+				  <div class="span4">
+						<span class="help-block">Add Xx ITEM_NAME to the auction.</span>
+				    <button type="submit" class="btn btn-success">Add Items</button>				  	
+				  </div>
+				</div>
 		  </fieldset>
 		</form>
+	</div>
 	{{/if}}
 </template>
 
