@@ -1,8 +1,12 @@
 Session.set("addItemError", null);
 
 Template.auction_editor.isOwner = function() {
-	console.log(Template.auction_page.auction());
 	return (Template.auction_page.auction() && Meteor.userId() == Template.auction_page.auction().owner);
+};
+
+Template.auction_editor.isEditable = function() {
+  var auction = Template.auction_page.auction();
+  return Template.auction_editor.isOwner() && auction.bids === 0;
 };
 
 Template.auction_editor.itemError = function () {
