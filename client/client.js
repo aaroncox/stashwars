@@ -34,18 +34,6 @@ Template.auction_list.show = function () {
   return Session.get( "auction-page" );
 };
 
-Template.nav.auction = function() {
-  Session.get("auction-page");
-  return Template.auction_page.auction();
-};
-
-Template.nav.rendered = function() {
-  jQuery(".nav a").each(function(){
-    var elem = jQuery(this);
-    elem.closest("li").toggleClass("active", this.hash == location.hash);
-  });
-};
-
 ///////////////////////////////////////////////////////////////////////////////
 // Create Auction Dialog
 
@@ -54,10 +42,6 @@ var openCreateDialog = function () {
   Session.set("showCreateDialog", true);
   // jQuery(Template.create_dialog.find(".modal")).removeClass("disabled");
 };
-
-Template.nav.events({
-  'click .create': openCreateDialog
-});
 
 Template.create_dialog.show = function () {
   return Session.get("showCreateDialog");
@@ -108,7 +92,7 @@ Template.create_dialog.events({
         if (error) {
           Session.set("createError", "There was an error creating this auction: " + error);
         } else {
-          window.location = "#auction-" + auction;
+          Meteor.Router.navigate("auction/" + auction,{trigger:true});
           Session.set("showCreateDialog", false);
         }
       });
