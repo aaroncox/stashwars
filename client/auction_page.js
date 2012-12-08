@@ -14,7 +14,7 @@ Template.auction_page_bid_info.auction = auction;
 Template.auction_page.auction = auction;
 
 Template.auction_page.show = function() {
-	return Session.get( "auction-id" );
+	return ( Session.get("currentpage") === "auction" ) && Session.get( "auction-id" );
 };
 
 Template.auction_page.error = function() {

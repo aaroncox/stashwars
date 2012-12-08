@@ -57,6 +57,20 @@
 
 </body>
 
+<template name="page">
+	{{> index}}
+	{{> auction_list}}
+	{{> create_dialog}}
+	{{> auction_page}}
+</template>
+
+<template name="index">
+	{{#if show}}
+	<h1>Welcome to StashWars</h1>
+	<p>Click on auctions to find the useful stuff</p>
+	{{/if}}
+</template>
+
 <template name="nav">
   <div class="nav-collapse collapse">
     <p class="navbar-text pull-right">
@@ -70,12 +84,6 @@
 			{{/if}}
     </ul>
   </div><!--/.nav-collapse -->
-</template>
-
-<template name="page">
-  {{> auction_list}}
-  {{> create_dialog}}
-  {{> auction_page}}
 </template>
 
 <template name="auction_page">

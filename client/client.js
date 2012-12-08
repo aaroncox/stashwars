@@ -35,7 +35,7 @@ Template.auction_list.all = function () {
 };
 
 Template.auction_list.show = function () {
-  return Session.get( "auction-page" );
+  return Session.get( "currentpage" ) === "auctionIndex";
 };
 
 ///////////////////////////////////////////////////////////////////////////////
