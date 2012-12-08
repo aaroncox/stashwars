@@ -26,6 +26,7 @@ Meteor.methods({
 	createAuction: function(options) {
 		return Auctions.insert({
 			owner: this.userId,
+			ownerName: Meteor.user().username,
 			title: options.title,
 			price: 0,
 			bids: 0,

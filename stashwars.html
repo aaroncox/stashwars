@@ -120,6 +120,7 @@
         <thead>
           <tr>
             <th>Name</th>
+            <th>Owner</th>
             <th>Current Bid</th>
             <th>Current Bidder</th>
             <th># of Bids</th>
@@ -139,6 +140,7 @@
 <template name="auction_row">
   <tr class="auction {{is_selected}}">
     <td><a class="local" href="/auction/{{_id}}" class="title">{{title}}</span></td>
+    <td>{{ownerName}}</td>
     <td>{{money price}}</td>
     <td>{{highestBidder}}</td>
     <td>{{bids}}</td>
