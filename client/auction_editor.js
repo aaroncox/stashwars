@@ -1,9 +1,14 @@
 Session.set("addItemError", null);
 
 Template.auction_editor.isOwner = function() {
-	console.log(Template.auction_page.auction())
+	console.log(Session.get( "auction-id" ));
+	var result = Auctions.findOne({
+		_id: Session.get( "auction-id" )
+	});
+	console.log(result);
+	console.log(Template.auction_page.auction());
 	console.log(this.userId);
-	// return (Template.auction_page.auction() && this.userId == Template.auction_page.auction().owner);
+	return (Template.auction_page.auction() && this.userId == Template.auction_page.auction().owner);
 };
 
 Template.auction_editor.itemError = function () {
