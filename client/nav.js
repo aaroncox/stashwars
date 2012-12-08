@@ -1,5 +1,5 @@
 Template.nav.auction = function() {
-	Session.get("auction-page");
+	Session.get("page");
 	return Template.auction_page.auction();
 };
 
