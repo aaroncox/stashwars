@@ -23,3 +23,13 @@ Template.nav.auction = function() {
 Template.home.events({
 	'click .create': openCreateDialog
 });
+
+Template._loginButtonsLoggedInDropdownActions.rendered = function(){
+	var $ = jQuery;
+	var ele = $('<div class="login-button">Create Auction</div>');
+	$("#login-buttons-open-change-password").before(ele);
+	ele.click(function(){
+		openCreateDialog();
+		Accounts._loginButtonsSession.closeDropdown();
+	});
+}
