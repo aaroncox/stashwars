@@ -180,8 +180,21 @@
 </template>
 
 <template name="auction_itemlist">
-	test
-	{{#each auction.items}}
-		{{item}}
-	{{/each}}
+	<h5>Name: {{auction.name}}</h5>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Qty</th>
+				<th>Name</th>
+			</tr>
+		</thead>
+		<tbody>
+		{{#each auction.items}}
+			<tr>
+				<td>{{quantity}}</td>
+				<td>{{item}}</td>
+			</tr>
+		{{/each}}
+		</tbody>
+	</table>
 </template>
