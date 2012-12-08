@@ -4,7 +4,7 @@ Template.nav.auction = function() {
 };
 
 Template.nav.rendered = function() {
-	jQuery(".nav a").each(function(){
+	jQuery("a.local").each(function(){
 		var elem = jQuery(this),
 			linkPath = this.pathname.replace(/^\//,""),
 			locationPath = location.pathname.replace(/^\//,""),

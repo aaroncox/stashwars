@@ -35,7 +35,6 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </a>
-        <a class="brand local" href="/">StashWars</a>
         {{> nav}}
       </div>
     </div>
@@ -61,8 +60,34 @@
 <template name="page">
 	{{> index}}
 	{{> auction_list}}
+	{{> bids_page}}
 	{{> create_dialog}}
 	{{> auction_page}}
+</template>
+
+<template name="bids_page">
+	{{#if show}}
+	<h4>Recent Bids</h4>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Amount</th>
+				<th>Bidder</th>
+				<th>Auction</th>
+				<th>Time</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{#each bids}}
+			<tr>
+				<td align="right">{{money value}}</td>
+				<td>{{ownerName}}</td>
+				<td><a class="local" href="/auction/{{auction}}">{{auctionTitle auction}}</a></td>
+				<td>{{timeago time}}</td>
+			{{/each}}
+		</tbody>
+	</table>
+	{{/if}}
 </template>
 
 <template name="index">
@@ -73,6 +98,7 @@
 </template>
 
 <template name="nav">
+	<a class="brand local" href="/">StashWars</a>
   <div class="nav-collapse collapse">
     <p class="navbar-text pull-right">
       <button class="btn create">Create Auction</button>
@@ -80,6 +106,7 @@
     </p>
     <ul class="nav">
 			<li><a class="local" href="/auctions">Auctions</a></li>
+			<li><a class="local" href="/bids">Bids</a></li>
 			{{#if auction}}
 			<li><a class="local" href="/auction/{{auction._id}}">{{auction.title}}</a></li>
 			{{/if}}

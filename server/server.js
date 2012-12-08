@@ -5,6 +5,9 @@ Meteor.publish("auctions", function () {
 Meteor.publish("auction-bids", function( auctionId ) {
 	return Bids.find({ auction: auctionId }, {limit: 20, sort: {time: -1}});
 });
+Meteor.publish("bids-recent", function( auctionId ) {
+	return Bids.find({}, {limit: 20, sort: {time: -1}});
+});
 
 Meteor.methods({
 	bid: function(options) {
@@ -51,7 +54,7 @@ Meteor.methods({
 			time: timestamp
 		});
 	}
-})
+});
 
 Accounts.validateNewUser(function (user) {
   if (user.username && user.username.length >= 3 && user.username.length <= 16)

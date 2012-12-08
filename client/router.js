@@ -2,7 +2,8 @@ var StashWarsRouter = Backbone.Router.extend({
 	routes: {
 		"": "index",
 		"auction/:auction_id": "auction",
-		"auctions": "auctionIndex"
+		"auctions": "auctionIndex",
+		"bids": "bidsPage"
 	},
 	index: function() {
 		Session.set("currentpage", "index");
@@ -16,6 +17,9 @@ var StashWarsRouter = Backbone.Router.extend({
 		Session.set("currentpage", "auction");
 		Session.set("auction-id", auction_id );
 		Session.set("auction_page_bid_error", false);
+	},
+	bidsPage: function() {
+		Session.set("currentpage", "bidsPage");
 	}
 });
 
