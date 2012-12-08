@@ -90,6 +90,7 @@
 <template name="auction_page">
 	{{#if show}}
 		<h1>{{auction.title}}</h1>
+		{{> item_select}}
 		<h3>Current Bid: {{money auction.price}} by {{auction.highestBidder}}</h3>
 		<form class="bid">
 			{{#if error}}
@@ -180,4 +181,12 @@
     </div>
   </div>
   {{/if}}
+</template>
+
+<template name="item_select">
+	<select name="item" class="select">
+		{{#key_value items}}
+			<option value="{{key}}">{{value}}</option>
+		{{/key_value}}
+	</select>
 </template>
