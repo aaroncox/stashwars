@@ -12,6 +12,10 @@ Accounts.ui.config({
   passwordSignupFields: 'USERNAME_AND_EMAIL'
 });
 
+Accounts.config({
+  sendVerificationEmail: true
+});
+
 Handlebars.registerHelper("money", function( value ) {
   var parsed = parseFloat(value).toFixed(0),
     len = parsed.length - 3;

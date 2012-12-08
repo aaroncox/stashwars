@@ -45,3 +45,9 @@ Meteor.methods({
 		});
 	}
 })
+
+Accounts.validateNewUser(function (user) {
+  if (user.username && user.username.length >= 3 && user.username.length <= 16)
+    return true;
+  throw new Meteor.Error(403, "Username length must be between 3 to 16 characters");
+});
