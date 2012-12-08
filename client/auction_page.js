@@ -26,20 +26,22 @@ Template.auction_page.events({
 		var input = template.find("input[name='bid']"),
 			value = input.value;
 		if ( value.match(/\D/) ) {
-			Session.set( "auction_page_bid_error", "Only numbers are allowed in bids" );
+			input.value = value.replace(/\D/g,"");
+			Session.set( "auction_page_bid_error", "Only numbers are allowed in bids, I removed the rest" );
+		} else {
+			Meteor.call("bid", {
+				value: value,
+				auction: Session.get( "auction-id" )
+			}, function (error, auction) {
+				if ( error ) {
+					Session.set( "auction_page_bid_error", error.reason );
+				} else {
+					Session.set( "auction_page_bid_error", false );
+					input.value = "";
+				}
+				console.log("bidresult", error, auction);
+			});
 		}
-		Meteor.call("bid", {
-			value: value,
-			auction: Session.get( "auction-id" )
-		}, function (error, auction) {
-			if ( error ) {
-				Session.set( "auction_page_bid_error", error.reason );
-			} else {
-				Session.set( "auction_page_bid_error", false );
-				input.value = "";
-			}
-			console.log("bidresult", error, auction);
-		});
 		event.preventDefault();
 	}
 });

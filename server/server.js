@@ -22,11 +22,18 @@ Meteor.methods({
 		if(!this.userId) {
 			throw new Meteor.Error(500, "You must be logged in to bid on auctions.");
 		}
+		if(this.userId === auction.owner) {
+			throw new Meteor.Error(409, "You can't bid on your own auctions");
+		}
+		if(this.userId === auction.highestBidderId) {
+			throw new Meteor.Error(409, "You can't outbid yourself");
+		}
 		if ( value > auction.price ) {
 			Auctions.update( query, {
 				$set: {
 					price: value,
 					highestBidder: Meteor.user().username,
+					highestBidderId: Meteor.user()._id,
 					last_bid: timestamp
 				},
 				$inc: {
