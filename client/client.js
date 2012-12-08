@@ -39,25 +39,6 @@ Template.nav.auction = function() {
   return Template.auction_page.auction();
 };
 
-// var bidSubscribe;
-
-// window.onhashchange = function() {
-//   Session.set( "auction-page", location.hash.match(/auctions/) );
-
-//   var idMatch = location.hash.match(/auction-([\w-]+)/),
-//     auctionId = idMatch && idMatch[1];
-//   if (Session.get("auction-id") !== auctionId || auctionId && !bidSubscribe) {
-//     if (bidSubscribe) {
-//       bidSubscribe.stop();
-//       bidSubscribe = null;
-//     }
-//     if (auctionId) {
-//       bidSubscribe = Meteor.subscribe( "auction-bids", auctionId );
-//     }
-//   }
-//   Session.set( "auction-id", auctionId );
-// };
-
 Template.nav.rendered = function() {
   jQuery(".nav a").each(function(){
     var elem = jQuery(this);
