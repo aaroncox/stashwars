@@ -138,7 +138,7 @@
 <template name="auction_row">
   <tr class="auction {{is_selected}}">
     <td><a class="local" href="/auction/{{_id}}" class="title">{{title}}</span></td>
-    <td>{{money price}}</td>
+    <td>{{money price}} {{highestBidder}}</td>
     <td>{{bids}}</td>
     <td>{{timeago last_bid}}</td>
   </tr>
