@@ -26,7 +26,8 @@ Template.auction_page.events({
 		var input = template.find("input[name='bid']"),
 			value = input.value;
 		if ( value.match(/\D/) ) {
-			Session.set( "auction_page_bid_error", "Only numbers are allowed in bids" );
+			input.value = value.replace(/\D/g,"");
+			Session.set( "auction_page_bid_error", "Only numbers are allowed in bids, I removed the rest" );
 		} else {
 			Meteor.call("bid", {
 				value: value,
