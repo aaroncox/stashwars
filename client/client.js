@@ -34,6 +34,10 @@ Template.auction_list.all = function () {
   return Auctions.find({});
 };
 
+Template.auction_list.show = function () {
+  return Session.get( "currentpage" ) === "auctionIndex";
+};
+
 ///////////////////////////////////////////////////////////////////////////////
 // Create Auction Dialog
 

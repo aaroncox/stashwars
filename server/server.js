@@ -5,6 +5,9 @@ Meteor.publish("auctions", function () {
 Meteor.publish("auction-bids", function( auctionId ) {
 	return Bids.find({ auction: auctionId }, {limit: 20, sort: {time: -1}});
 });
+Meteor.publish("bids-recent", function( auctionId ) {
+	return Bids.find({}, {limit: 20, sort: {time: -1}});
+});
 
 Meteor.methods({
 	bid: function(options) {
@@ -22,11 +25,18 @@ Meteor.methods({
 		if(!this.userId) {
 			throw new Meteor.Error(500, "You must be logged in to bid on auctions.");
 		}
+		if(this.userId === auction.owner) {
+			throw new Meteor.Error(409, "You can't bid on your own auctions");
+		}
+		if(this.userId === auction.highestBidderId) {
+			throw new Meteor.Error(409, "You can't outbid yourself");
+		}
 		if ( value > auction.price ) {
 			Auctions.update( query, {
 				$set: {
 					price: value,
 					highestBidder: Meteor.user().username,
+					highestBidderId: Meteor.user()._id,
 					last_bid: timestamp
 				},
 				$inc: {
@@ -44,7 +54,7 @@ Meteor.methods({
 			time: timestamp
 		});
 	}
-})
+});
 
 Accounts.validateNewUser(function (user) {
   if (user.username && user.username.length >= 3 && user.username.length <= 16)

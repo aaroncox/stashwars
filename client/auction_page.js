@@ -14,11 +14,15 @@ Template.auction_page_bid_info.auction = auction;
 Template.auction_page.auction = auction;
 
 Template.auction_page.show = function() {
-	return Session.get( "auction-id" );
+	return ( Session.get("currentpage") === "auction" ) && Session.get( "auction-id" );
 };
 
 Template.auction_page.error = function() {
 	return Session.get( "auction_page_bid_error" );
+};
+
+Template.auction_editor.isOwner = function() {
+	return (Template.auction_page.auction() && this.userId == Template.auction_page.auction().owner);
 };
 
 Template.auction_page.events({
@@ -26,20 +30,22 @@ Template.auction_page.events({
 		var input = template.find("input[name='bid']"),
 			value = input.value;
 		if ( value.match(/\D/) ) {
-			Session.set( "auction_page_bid_error", "Only numbers are allowed in bids" );
+			input.value = value.replace(/\D/g,"");
+			Session.set( "auction_page_bid_error", "Only numbers are allowed in bids, I removed the rest" );
+		} else {
+			Meteor.call("bid", {
+				value: value,
+				auction: Session.get( "auction-id" )
+			}, function (error, auction) {
+				if ( error ) {
+					Session.set( "auction_page_bid_error", error.reason );
+				} else {
+					Session.set( "auction_page_bid_error", false );
+					input.value = "";
+				}
+				console.log("bidresult", error, auction);
+			});
 		}
-		Meteor.call("bid", {
-			value: value,
-			auction: Session.get( "auction-id" )
-		}, function (error, auction) {
-			if ( error ) {
-				Session.set( "auction_page_bid_error", error.reason );
-			} else {
-				Session.set( "auction_page_bid_error", false );
-				input.value = "";
-			}
-			console.log("bidresult", error, auction);
-		});
 		event.preventDefault();
 	}
 });

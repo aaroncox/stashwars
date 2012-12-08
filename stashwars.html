@@ -1,4 +1,5 @@
 <head>
+
   <meta charset="utf-8">
   <title>StashWars - Fast Paced Auctions for Diablo 3</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -34,7 +35,6 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </a>
-        <a class="brand local" href="/">StashWars</a>
         {{> nav}}
       </div>
     </div>
@@ -45,11 +45,6 @@
       {{> page}}
     </div>
   </div> <!-- /container -->
-  
-  <hr>
-  <footer>
-    <p>© StashWars.com 2012</p>
-  </footer>
 
   <!-- Le javascript
   ================================================== -->
@@ -62,13 +57,56 @@
 
 </body>
 
+<template name="page">
+	{{> index}}
+	{{> auction_list}}
+	{{> bids_page}}
+	{{> create_dialog}}
+	{{> auction_page}}
+</template>
+
+<template name="bids_page">
+	{{#if show}}
+	<h4>Recent Bids</h4>
+	<table class="table">
+		<thead>
+			<tr>
+				<th>Amount</th>
+				<th>Bidder</th>
+				<th>Auction</th>
+				<th>Time</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{#each bids}}
+			<tr>
+				<td align="right">{{money value}}</td>
+				<td>{{ownerName}}</td>
+				<td><a class="local" href="/auction/{{auction}}">{{auctionTitle auction}}</a></td>
+				<td>{{timeago time}}</td>
+			{{/each}}
+		</tbody>
+	</table>
+	{{/if}}
+</template>
+
+<template name="index">
+	{{#if show}}
+	<h1>Welcome to StashWars.com</h1>
+	<p>Click on <a href="/auctions" class="local">auctions</a> to find the useful stuff.</p>
+	{{/if}}
+</template>
+
 <template name="nav">
+	<a class="brand local" href="/">StashWars</a>
   <div class="nav-collapse collapse">
     <p class="navbar-text pull-right">
+      <button class="btn create">Create Auction</button>
       {{loginButtons}}
     </p>
     <ul class="nav">
 			<li><a class="local" href="/auctions">Auctions</a></li>
+			<li><a class="local" href="/bids">Bids</a></li>
 			{{#if auction}}
 			<li><a class="local" href="/auction/{{auction._id}}">{{auction.title}}</a></li>
 			{{/if}}
@@ -76,9 +114,70 @@
   </div><!--/.nav-collapse -->
 </template>
 
-<template name="page">
-  {{#page_view}}{{/page_view}}
-  {{> create_dialog}}
+<template name="auction_page">
+	{{#if show}}
+	  <div class="span4">
+			<h1>{{auction.title}}</h1>
+			<h3>Current Bid: {{money auction.price}} by {{auction.highestBidder}}</h3>
+			<form class="bid">
+				{{#if error}}
+				<div class="alert alert-error">{{error}}</div>
+				{{/if}}
+				<input type="text" name="bid" value="0">
+				<input type="submit" class="btn" value="Bid">
+			</form>
+			{{> auction_page_bid_info}}
+	  </div>
+	  <div class="span8">
+			{{> auction_editor}}
+	  </div>
+	{{/if}}
+</template>
+
+<template name="auction_page_bid_info">
+	<h5># of Bids: {{auction.bids}}</h5>
+	<h5>Last Bid: {{timeago auction.last_bid}}</h5>
+	<ul>
+	{{#each bids}}
+		<li>{{money value}} by {{ownerName}}</li>
+	{{/each}}
+	</ul>
+</template>
+
+<template name="auction_list">
+  {{#if show}}
+    <div class="auction_list">
+      <h4>Auctions</h4>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Owner</th>
+            <th>Current Bid</th>
+            <th>Current Bidder</th>
+            <th># of Bids</th>
+            <th>Last Bid</th>
+          </tr>
+        </thead>
+        <tbody>
+          {{#each all}}
+            {{> auction_row}}
+          {{/each}}
+        </tbody>
+      </table>
+    </div>
+  {{/if}}
+</template>
+
+<template name="auction_row">
+  <tr class="auction {{is_selected}}">
+    <td><a class="local" href="/auction/{{_id}}" class="title">{{title}}</span></td>
+    <td>{{ownerName}}</td>
+    <td>{{money price}}</td>
+    <td>{{highestBidder}}</td>
+    <td>{{bids}}</td>
+    <td>{{timeago last_bid}}</td>
+  </tr>
 </template>
 
 <template name="create_dialog">
@@ -96,7 +195,7 @@
       {{/if}}
 			<p>The first few pieces of information we need are a title for the auction, as well as how long you're going to be around to complete the transaction.</p>
       <label>Descriptive Title</label>
-      <input type="text" class="title span5">
+			<input type="text" class="title span5">
 			<label>Type of Auction</label>
 			<select class="type">
 				<option value="unid">Unidentified Items Auction</option>
@@ -117,4 +216,38 @@
     </div>
   </div>
   {{/if}}
+</template>
+
+<template name="auction_editor">
+	{{#if isOwner}}
+	<div class="alert alert-info">
+		<form>
+			<fieldset>
+				<legend>Auction Controls</legend>
+				<div class="row-fluid">
+				  <div class="span4">
+				    <label>Pick an Unidentified Item...</label>
+						{{> item_select}}		  					  	
+				  </div>
+				  <div class="span4">
+				    <label>and pick how many...</label>
+						<input type="text" placeholder="Quantity">
+				  </div>
+				  <div class="span4">
+						<span class="help-block">Add Xx ITEM_NAME to the auction.</span>
+				    <button type="submit" class="btn btn-success">Add Items</button>				  	
+				  </div>
+				</div>
+		  </fieldset>
+		</form>
+	</div>
+	{{/if}}
+</template>
+
+<template name="item_select">
+	<select name="item" class="select">
+		{{#key_value items}}
+			<option value="{{key}}">{{value}}</option>
+		{{/key_value}}
+	</select>
 </template>
