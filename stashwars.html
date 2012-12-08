@@ -45,6 +45,11 @@
       {{> page}}
     </div>
   </div> <!-- /container -->
+  
+  <hr>
+  <footer>
+    <p>© StashWars.com 2012</p>
+  </footer>
 
   <!-- Le javascript
   ================================================== -->
@@ -60,7 +65,6 @@
 <template name="nav">
   <div class="nav-collapse collapse">
     <p class="navbar-text pull-right">
-      <button class="btn create">Create Auction</button>
       {{loginButtons}}
     </p>
     <ul class="nav">
@@ -73,66 +77,8 @@
 </template>
 
 <template name="page">
-  {{> auction_list}}
+  {{#page_view}}{{/page_view}}
   {{> create_dialog}}
-  {{> auction_page}}
-</template>
-
-<template name="auction_page">
-	{{#if show}}
-		<h1>{{auction.title}}</h1>
-		<h3>Current Bid: {{money auction.price}} by {{auction.highestBidder}}</h3>
-		<form class="bid">
-			{{#if error}}
-			<div class="alert alert-error">{{error}}</div>
-			{{/if}}
-			<input type="text" name="bid" value="0">
-			<input type="submit" class="btn" value="Bid">
-		</form>
-		{{> auction_page_bid_info}}
-	{{/if}}
-</template>
-
-<template name="auction_page_bid_info">
-	<h5># of Bids: {{auction.bids}}</h5>
-	<h5>Last Bid: {{timeago auction.last_bid}}</h5>
-	<ul>
-	{{#each bids}}
-		<li>{{money value}} by {{ownerName}}</li>
-	{{/each}}
-	</ul>
-</template>
-
-<template name="auction_list">
-  {{#if show}}
-    <div class="auction_list">
-      <h4>Auctions</h4>
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Current Bid</th>
-            <th># of Bids</th>
-            <th>Last Bid</th>
-          </tr>
-        </thead>
-        <tbody>
-          {{#each all}}
-            {{> auction_row}}
-          {{/each}}
-        </tbody>
-      </table>
-    </div>
-  {{/if}}
-</template>
-
-<template name="auction_row">
-  <tr class="auction {{is_selected}}">
-    <td><a class="local" href="/auction/{{_id}}" class="title">{{title}}</span></td>
-    <td>{{money price}}</td>
-    <td>{{bids}}</td>
-    <td>{{timeago last_bid}}</td>
-  </tr>
 </template>
 
 <template name="create_dialog">

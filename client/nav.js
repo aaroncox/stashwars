@@ -16,6 +16,6 @@ Template.nav.rendered = function() {
 	});
 };
 
-Template.nav.events({
+Template.home.events({
 	'click .create': openCreateDialog
 });

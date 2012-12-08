@@ -5,14 +5,17 @@ var StashWarsRouter = Backbone.Router.extend({
 		"auctions": "auctionIndex"
 	},
 	index: function() {
+		Session.set("page", "home");
 		Session.set("auction-page", false);
 		Session.set("auction-id", false);
 	},
 	auctionIndex: function() {
+		Session.set("page", "auction_list");
 		Session.set("auction-page", true);
 		Session.set("auction-id", false);
 	},
 	auction: function( auction_id ) {
+		Session.set("page", "auction_page");
 		Session.set("auction-page", false);
 		Session.set("auction-id", auction_id );
 	}
@@ -28,4 +31,10 @@ Meteor.startup(function () {
 	var test = Backbone.history.start({ pushState: true });
 });
 
-
+//Routing with HandleBars Partials
+Handlebars.registerHelper("page_view", function() {
+	var page = Session.get("page");
+	if (Template[page])
+		return Template[page]({});
+	return "";
+});
