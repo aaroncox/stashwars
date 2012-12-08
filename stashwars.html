@@ -89,17 +89,21 @@
 
 <template name="auction_page">
 	{{#if show}}
-		<h1>{{auction.title}}</h1>
-		{{> item_select}}
-		<h3>Current Bid: {{money auction.price}} by {{auction.highestBidder}}</h3>
-		<form class="bid">
-			{{#if error}}
-			<div class="alert alert-error">{{error}}</div>
-			{{/if}}
-			<input type="text" name="bid" value="0">
-			<input type="submit" class="btn" value="Bid">
-		</form>
-		{{> auction_page_bid_info}}
+	  <div class="span4">
+			<h1>{{auction.title}}</h1>
+			<h3>Current Bid: {{money auction.price}} by {{auction.highestBidder}}</h3>
+			<form class="bid">
+				{{#if error}}
+				<div class="alert alert-error">{{error}}</div>
+				{{/if}}
+				<input type="text" name="bid" value="0">
+				<input type="submit" class="btn" value="Bid">
+			</form>
+			{{> auction_page_bid_info}}
+	  </div>
+	  <div class="span8">
+			{{> auction_editor}}
+	  </div>
 	{{/if}}
 </template>
 
@@ -185,6 +189,22 @@
     </div>
   </div>
   {{/if}}
+</template>
+
+<template name="auction_editor">
+	{{#if isOwner}}
+		<form>
+			<fieldset>
+		    <legend>Auction Controls</legend>
+		    <label>Pick an Unidentified Item...</label>
+				{{> item_select}}		  	
+		    <label>and pick how many...</label>
+				<input type="text" placeholder="Quantity">
+				<span class="help-block">This will add Xx ITEM_NAME to the auction.</span>
+		    <button type="submit" class="btn">Submit</button>
+		  </fieldset>
+		</form>
+	{{/if}}
 </template>
 
 <template name="item_select">

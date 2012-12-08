@@ -21,6 +21,10 @@ Template.auction_page.error = function() {
 	return Session.get( "auction_page_bid_error" );
 };
 
+Template.auction_editor.isOwner = function() {
+	return (Template.auction_page.auction() && this.userId == Template.auction_page.auction().owner);
+};
+
 Template.auction_page.events({
 	'submit .bid': function ( event, template ) {
 		var input = template.find("input[name='bid']"),
