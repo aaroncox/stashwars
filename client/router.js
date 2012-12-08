@@ -15,6 +15,7 @@ var StashWarsRouter = Backbone.Router.extend({
 	auction: function( auction_id ) {
 		Session.set("currentpage", "auction");
 		Session.set("auction-id", auction_id );
+		Session.set("auction_page_bid_error", false);
 	}
 });
 
