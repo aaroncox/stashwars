@@ -36,6 +36,9 @@ var StashWarsRouter = Backbone.Router.extend({
 	default: function (pagename) {	//Used in initialize() for easy routing for page templates
 		Session.set("currentpage", pagename);
 		Session.set("auction-id", null );
+		//The following are 2 general purpose msgs for use by any page
+		Session.set("errorMsg", null );
+		Session.set("successMsg", null );
 	},
 	auction: function( auction_id ) {
 		Session.set("currentpage", "auction_page");
