@@ -167,15 +167,9 @@
 
 <template name="item_select">
 	<select id="item" class="select">
-		{{#key_value items.set}}
-			<option value="{{key}}">{{value}}</option>
-		{{/key_value}}
-		{{#key_value items.legendary}}
-			<option value="{{key}}">{{value}}</option>
-		{{/key_value}}
-		{{#key_value items.rare}}
-			<option value="{{key}}">{{value}}</option>
-		{{/key_value}}
+		{{#each items}}
+			<option value="{{slug}}">{{name}}</option>
+		{{/each}}
 	</select>
 </template>
 
