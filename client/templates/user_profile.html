@@ -41,7 +41,33 @@
     </div>
     
     <div class="span7 well">
-      hello
+      <form>
+        <legend>My Auctions</legend>
+        <fieldset>
+          <table class="table">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Current Bid</th>
+                <th>Current Bidder</th>
+                <th># of Bids</th>
+                <th>Last Bid</th>
+              </tr>
+            </thead>
+            <tbody>
+              {{#each myAuctions}}
+                <tr>
+                  <td><a class="local" href="/auction/{{_id}}" class="title">{{title}}</span></td>
+                  <td>{{money price}}</td>
+                  <td>{{highestBidder}}</td>
+                  <td>{{bids}}</td>
+                  <td>{{timeago last_bid}}</td>
+                </tr>
+              {{/each}}
+            </tbody>
+          </table>
+        </fieldset>
+      </form>
     </div>
   </div>
 </template>
