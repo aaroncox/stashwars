@@ -58,7 +58,13 @@ Meteor.methods({
 				});
 				throw new Meteor.Error(409, "Your bid was automatically outbid.");
 			}
-			minPrice = lastBid.maxValue + inc;
+			// If we had a last bid, jump over it by the inc
+			if(lastBid && lastBid.maxValue) {
+				minPrice = lastBid.maxValue + inc;				
+			} else {
+				// Otherwise start with default value
+				minPrice = 5;		// TODO - This should be the starting value of the auction probably
+			}
 			// Create the Bid
 			var bid = Bids.insert({
 				auction: options.auction,
