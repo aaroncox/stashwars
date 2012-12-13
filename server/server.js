@@ -58,6 +58,7 @@ Meteor.methods({
 				});
 				throw new Meteor.Error(409, "Your bid was automatically outbid.");
 			}
+			minPrice = lastBid.maxValue + inc;
 			// Create the Bid
 			var bid = Bids.insert({
 				auction: options.auction,
