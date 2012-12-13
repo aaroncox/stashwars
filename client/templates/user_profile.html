@@ -1,48 +1,47 @@
 <!-- This is the editable profile, not the public user page. -->
 <template name="user_profile">
-  <div class="span6">
-    <div class="well sidebar-nav">
-      <ul class="nav nav-list">
-        {{#if currentUser}}
-        <li>
-          <form class="form-horizontal">
-            <fieldset>
-              <legend>My Profile</legend>
-                {{#if_session "errorMsg"}}
-                <div class="alert alert-error">{{this}}</div>
-                {{/if_session}}
-                {{#if_session "successMsg"}}
-                <div class="alert alert-success">{{this}}</div>
-                {{/if_session}}
-                <div class="control-group">
-                  <label class="control-label" for="email">Region</label>
-                  <div class="controls">
-                    <select id="region">
-                      {{#each regions}}
-                      <option {{selected this currentUser.profile.region}}>{{this}}</option>
-                      {{/each}}
-                    </select>
-                  </div>
+  <div id="user-profile">
+    <div class="span5 well">
+      {{#if currentUser}}
+        <form class="form-horizontal">
+          <fieldset>
+            <legend>My Profile</legend>
+              {{#if_session "errorMsg"}}
+              <div class="alert alert-error">{{this}}</div>
+              {{/if_session}}
+              {{#if_session "successMsg"}}
+              <div class="alert alert-success">{{this}}</div>
+              {{/if_session}}
+              <div class="control-group">
+                <label class="control-label" for="email">Region</label>
+                <div class="controls">
+                  <select class="span8" id="region">
+                    {{#each regions}}
+                    <option {{selected this currentUser.profile.region}}>{{this}}</option>
+                    {{/each}}
+                  </select>
                 </div>
-                <div class="control-group">
-                  <label class="control-label" for="battletag">BattleTag</label>
-                  <div class="controls">
-                    <input type="text" id="battletag" placeholder="i.e. Cain#1742" value="{{currentUser.profile.battletag}}">
-                  </div>
+              </div>
+              <div class="control-group">
+                <label class="control-label" for="battletag">BattleTag</label>
+                <div class="controls">
+                  <input type="text" class="span8" id="battletag" placeholder="i.e. Cain#1742" value="{{currentUser.profile.battletag}}">
                 </div>
-                <div class="control-group">
-                  <div class="controls">
-                    <button type="submit" class="btn" id="save">Save</button>
-                  </div>
+              </div>
+              <div class="control-group">
+                <div class="controls">
+                  <button type="submit" class="btn" id="save">Save</button>
                 </div>
-            </fieldset>
-          </form>
-        </li>
-        {{else}}
-        <li>Please log in to access this page.</li>
-        {{/if}}
-      </ul>
-    </div><!--/.well -->
-  </div><!--/span-->
-  
+              </div>
+          </fieldset>
+        </form>
+      {{else}}
+        Please log in to access this page.
+      {{/if}}
+    </div>
+    
+    <div class="span7 well">
+      hello
+    </div>
+  </div>
 </template>

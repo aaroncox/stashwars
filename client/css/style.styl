@@ -10,6 +10,8 @@
 footer
 	text-align center
 	padding-bottom 10px
+input
+	max-width 100%
 .auction
 	.title
 		color darkred
@@ -36,7 +38,16 @@ footer
 		border 1px solid #748E3D
 		background url(/img/bgs/green.png)
 
-//overrides and fixes
+/*
+* overrides and fixes
+*/
+
+//Blizz tooltip icon fix
 .icon-item-gradient
 	width: inherit
 	height: inherit
+//Bootstrap Responsive low-res fix
+.navbar-fixed-top
+	position fixed !important
+	margin-right 0 !important
+	margin-left 0 !important
