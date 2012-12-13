@@ -190,9 +190,14 @@
 		</thead>
 		<tbody>
 		{{#each auction.items}}
-			<tr>
+			<tr class="item">
 				<td>{{quantity}}</td>
-				<td><a href="http://us.battle.net/d3/en/item/{{item}}">{{item}}</a></td>
+				<td>
+					<a href="{{item.link}}">
+						<img class="icon {{item.quality}}" src="{{item.icon}}" />
+						{{item.name}}
+					</a>
+				</td>
 			</tr>
 		{{/each}}
 		</tbody>

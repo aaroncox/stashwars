@@ -40,5 +40,6 @@ Template._loginButtonsLoggedInDropdownActions.events = {
 	},
 	'click #user-profile': function (event) {
 		Meteor.Router.navigate("profile", {trigger: true});
+		Accounts._loginButtonsSession.closeDropdown();
 	}
 }

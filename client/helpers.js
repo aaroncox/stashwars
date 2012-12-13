@@ -1,3 +1,7 @@
+/*
+* Generic Heplers go here
+*/
+
 //Convenient helper for selecting default option
 Handlebars.registerHelper('selected', function(val, option) {
 	return val == option ? ' selected' : '';

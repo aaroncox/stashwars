@@ -22,7 +22,6 @@ function auction() {
 
 Template.auction_itemlist.auction = auction;
 
-
 Template.auction_editor.events = {
 	'submit': function(e) {
 		return e.preventDefault();
@@ -32,8 +31,9 @@ Template.auction_editor.events = {
   'click #start': function (event) {
 	},
   'click #add': function (event, template) {
-		var item = template.find("#item").value,
-				quantity = parseInt(template.find("#quantity").value);
+		var itemSlug = template.find("#item").value,
+				quantity = parseInt(template.find("#quantity").value),
+        item = _.find(itemData, function(i){ return i.slug == itemSlug; });
     // Ensure an item is selected
     if(!item) {
       Session.set("addItemError",
