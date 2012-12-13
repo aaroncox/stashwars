@@ -6,7 +6,7 @@ Template.auction_editor.isOwner = function() {
 
 Template.auction_editor.isEditable = function() {
   var auction = Template.auction_page.auction();
-  return Template.auction_editor.isOwner() && auction.bids === 0;
+  return auction.bids === 0;
 };
 
 Template.auction_editor.itemError = function () {
