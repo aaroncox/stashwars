@@ -25,7 +25,7 @@
   <div class="span4">
 		<h1>{{auction.title}}</h1>
 		<h3>Current Bid: {{money auction.price}} by {{auction.highestBidder}}</h3>
-		<form class="bid">
+		<form class="bid form-inline">
 			{{#if error}}
 			<div class="alert alert-error">{{error}}</div>
 			{{/if}}
