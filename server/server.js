@@ -32,9 +32,41 @@ Meteor.methods({
 			throw new Meteor.Error(409, "You can't outbid yourself");
 		}
 		if ( value > auction.price ) {
+			var inc = 5,
+					minPrice = auction.price + inc;
+			// Our bid isn't high enough for the increment value, throw an error.
+			if( minPrice > value ) {
+				throw new Meteor.Error(409, "Your bid is not high enough, the bid increment is set to " + inc + ", you must bid atleast " + (auction.price + inc) + ".");
+			}
+			// Find the last bid that was on the auction
+			var	lastBid = Bids.findOne({ _id: auction.bidId });
+			// If our new bid is LESS THAN the last bidders maxBid, update the auction and throw.
+			if( value <= lastBid.maxValue ) {
+				Auctions.update( query, {
+					$set: {
+						price: value,
+						last_bid: timestamp
+					},
+					$inc: {
+						bids: 1
+					}
+				});
+				throw new Meteor.Error(409, "Your bid was automatically outbid.");
+			}
+			// Create the Bid
+			var bid = Bids.insert({
+				auction: options.auction,
+				owner: this.userId,
+				ownerName: Meteor.user().username,
+				value: minPrice,
+				maxValue: value,
+				time: timestamp
+			});
+			// Update the Auction
 			Auctions.update( query, {
 				$set: {
-					price: value,
+					price: minPrice,
+					bidId: bid,
 					highestBidder: Meteor.user().username,
 					highestBidderId: Meteor.user()._id,
 					last_bid: timestamp
@@ -46,13 +78,6 @@ Meteor.methods({
 		} else {
 			throw new Meteor.Error(409, "Bid not high enough", { auction: auction, bid: options });
 		}
-		return Bids.insert({
-			auction: options.auction,
-			owner: this.userId,
-			ownerName: Meteor.user().username,
-			value: value,
-			time: timestamp
-		});
 	}
 });
 
