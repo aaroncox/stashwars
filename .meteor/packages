@@ -5,10 +5,10 @@
 
 insecure
 preserve-inputs
-bootstrap
 accounts-ui
 accounts-password
 accounts-base
 underscore
 stylus
 backbone
+bootstrap
