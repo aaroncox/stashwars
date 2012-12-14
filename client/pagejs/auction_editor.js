@@ -1,5 +1,6 @@
 Session.set("addItemError", null);
 
+Template.auction_page.isOwner = 
 Template.auction_editor.isOwner = function() {
 	return (Template.auction_page.auction() && Meteor.userId() == Template.auction_page.auction().owner);
 };
