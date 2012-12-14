@@ -26,10 +26,22 @@ Meteor.methods({
 	createAuction: function(options) {
 		return Auctions.insert({
 			owner: this.userId,
+			ownerName: Meteor.user().username,
 			title: options.title,
 			price: 0,
 			bids: 0,
+			items: [],
 			duration: options.duration
+		});
+	},
+	addItem: function(options) {
+		return Auctions.update( options.auction._id, { 
+			$push: {
+				items: {
+					item: options.item,
+					quantity: options.quantity
+				}
+			}
 		});
 	}
 });

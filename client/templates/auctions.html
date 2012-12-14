@@ -1,0 +1,223 @@
+<template name="bids_page">
+  <h4>Recent Bids</h4>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Amount</th>
+        <th>Bidder</th>
+        <th>Auction</th>
+        <th>Time</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each bids}}
+      <tr>
+        <td align="right">{{money value}}</td>
+        <td>{{ownerName}}</td>
+        <td><a class="local" href="/auction/{{auction}}">{{auctionTitle auction}}</a></td>
+        <td>{{timeago time}}</td>
+      {{/each}}
+    </tbody>
+  </table>
+</template>
+
+<template name="auction_page">
+  <div class="span4 well" >
+		<h1>{{auction.title}}</h1>
+		{{#if auction.highestBidder}}
+		<h3>Current Bid: {{money auction.price}} by {{auction.highestBidder}}</h3>
+		{{else}}
+		<h3>No bids</h3>
+		{{/if}}
+		{{#unless isOwner}}
+		<form class="bid form-inline">
+			{{#if error}}
+			<div class="alert alert-error">{{error}}</div>
+			{{/if}}
+			<input type="text" name="bid" value="0">
+			<input type="submit" class="btn" value="Bid">
+		</form>
+		{{/unless}}
+		{{> auction_page_bid_info}}
+  </div>
+  <div class="span8">
+		{{> auction_editor}}
+		{{> auction_itemlist}}
+  </div>
+</template>
+
+<template name="auction_page_bid_info">
+	{{#if auction.highestBidder}}
+	<h5># of Bids: {{auction.bids}}</h5>
+	<h5>Last Bid: {{timeago auction.last_bid}}</h5>
+	<ul>
+	{{#each bids}}
+		<li>{{money value}} by {{ownerName}}</li>
+	{{/each}}
+	</ul>
+	{{/if}}
+</template>
+
+<template name="auction_list">
+  <div class="auction_list">
+    <h4>Auctions</h4>
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Name</th>
+					<th>Items</th>
+          <th>Owner</th>
+          <th>Current Bid</th>
+          <th>Current Bidder</th>
+          <th># of Bids</th>
+          <th>Last Bid</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each all}}
+          {{> auction_row}}
+        {{/each}}
+      </tbody>
+    </table>
+  </div>
+</template>
+
+<template name="auction_row">
+  <tr class="auction {{is_selected}}">
+    <td><a class="local" href="/auction/{{_id}}" class="title">{{title}}</span></td>
+		<td class="item">
+			<span class='icon rare'>1</span>
+			<span class='icon legendary'>1</span>
+			<span class='icon set'>1</span>
+		</td>
+    <td>{{ownerName}}</td>
+    <td>{{money price}}</td>
+    <td>{{highestBidder}}</td>
+    <td>{{bids}}</td>
+    <td>{{timeago last_bid}}</td>
+  </tr>
+</template>
+
+<template name="create_dialog">
+  {{#if show}}
+  <div class="mask"> </div>
+  <div class="modal">
+    <div class="modal-header">
+      <button type="button" class="close cancel">&times;</button>
+      <h3>Create an Auction</h3>
+    </div>
+
+    <div class="modal-body">
+      {{#if error}}
+        <div class="alert alert-error">{{error}}</div>
+      {{/if}}
+			<p>The first few pieces of information we need are a title for the auction, as well as how long you're going to be around to complete the transaction.</p>
+      <label>Descriptive Title</label>
+			<input type="text" class="title span5">
+			<label>Type of Auction</label>
+			<select class="type">
+				<option value="unid">Unidentified Items Auction</option>
+			</select>
+			<label>Length of Auction</label>
+			<select class="duration">
+				<option value="60">60 Minutes</option>
+				<option value="30">30 Minutes</option>
+				<option value="15">15 Minutes</option>
+			</select>
+			<h4>Next Steps...</h4>
+			<p>Clicking "Create" will not automatically start your auction. On the next screen, you will configure exactly what is part of this auction and any other options.</p>
+    </div>
+
+    <div class="modal-footer">
+      <button class="btn cancel">Cancel</button>
+      <button class="btn btn-primary save">Create</button>
+    </div>
+  </div>
+  {{/if}}
+</template>
+
+<template name="auction_editor">
+	{{#if isOwner}}
+		{{#if isEditable}}
+		<div class="well">
+			<form>
+				<fieldset>
+					<legend>
+						Auction Controls
+						<button id="start" class="btn btn-success pull-right">Start Auction</button>				  	
+					</legend>
+					<div class="row-fluid">
+						{{#if itemError}}
+			        <div class="alert alert-error">{{itemError}}</div>
+			      {{/if}}
+					  <div class="span4">
+							<label>Auction ends at</label>
+							<input type="text" id="endtime" placeholder="Pick when the auction will end">
+					  </div>
+					  <div class="span4">
+						  <label>Minimum Bid</label>
+							<input type="text" id="minbid" placeholder="Minimum Bid (Default = 0)">
+							<label>Bid Increment</label>
+							<select id="incremenent" placeholder="Bid Incremenent">
+								<option value="5">5k</option>
+								<option value="10">10k</option>
+								<option value="25">25k</option>
+								<option value="50">50k</option>
+								<option value="100">100k</option>
+								<option value="200">200k</option>
+								<option value="250">250k</option>
+								<option value="500">500k</option>
+							</select>
+					  </div>
+					  <div class="span4">
+						  <label>Pick an Unidentified Item...</label>
+							{{> item_select}}		  					  	
+					    <label>and pick how many...</label>
+							<input type="text" id="quantity" value="1">
+					    <button type="submit" id="add" class="btn btn-success">Add Items to Auction</button>				  	
+					  </div>
+					</div>
+			  </fieldset>
+			</form>
+		</div>
+		{{else}}
+		<div class="alert">
+			<h5>Bidding has started, you can no longer modify the auction.</h5>
+		</div>
+		{{/if}}
+	{{/if}}
+</template>
+
+<template name="item_select">
+	<select id="item" class="select">
+		{{#each items}}
+			<option value="{{slug}}">{{name}}</option>
+		{{/each}}
+	</select>
+</template>
+
+<template name="auction_itemlist">
+	<div class="well well-small">
+		<table class="table">
+			<thead>
+				<tr>
+					<th>Qty</th>
+					<th>Name</th>
+				</tr>
+			</thead>
+			<tbody>
+			{{#each auction.items}}
+				<tr class="item">
+					<td>{{quantity}}</td>
+					<td>
+						<a class="{{item.quality}}" href="{{item.link}}">
+							<img class="icon {{item.quality}}" src="{{item.icon}}" />
+							{{item.name}}
+						</a>
+					</td>
+				</tr>
+			{{/each}}
+			</tbody>
+		</table>
+	</div>
+</template>

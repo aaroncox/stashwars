@@ -1,4 +1,5 @@
 <head>
+
   <meta charset="utf-8">
   <title>StashWars - Fast Paced Auctions for Diablo 3</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,6 +17,7 @@
   <!--[if lt IE 9]>
     <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
   <![endif]-->
+	<script src="http://us.battle.net/d3/static/js/tooltips.js"></script>
 
   <!-- Fav and touch icons -->
   <link rel="shortcut icon" href="/img/favicon.ico">
@@ -34,7 +36,6 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </a>
-        <a class="brand local" href="/">StashWars</a>
         {{> nav}}
       </div>
     </div>
@@ -45,6 +46,11 @@
       {{> page}}
     </div>
   </div> <!-- /container -->
+  
+  <hr>
+  <footer>
+    <p>© StashWars.com 2012</p>
+  </footer>
 
   <!-- Le javascript
   ================================================== -->
@@ -57,118 +63,22 @@
 
 </body>
 
+<template name="page">
+	{{#page_view}}{{/page_view}}
+	{{> create_dialog}}
+</template>
+
 <template name="nav">
+	<a class="brand local" href="/">StashWars</a>
   <div class="nav-collapse collapse">
     <p class="navbar-text pull-right">
-      <button class="btn create">Create Auction</button>
       {{loginButtons}}
     </p>
     <ul class="nav">
-			<li><a class="local" href="/auctions">Auctions</a></li>
-			{{#if auction}}
-			<li><a class="local" href="/auction/{{auction._id}}">{{auction.title}}</a></li>
-			{{/if}}
+      {{! Look into nav.js for more detail}}
+      {{#each nav_links}}
+      <li class="{{active}}"><a class="local" href="{{href}}">{{name}}</a></li>
+      {{/each}}
     </ul>
   </div><!--/.nav-collapse -->
-</template>
-
-<template name="page">
-  {{> auction_list}}
-  {{> create_dialog}}
-  {{> auction_page}}
-</template>
-
-<template name="auction_page">
-	{{#if show}}
-		<h1>{{auction.title}}</h1>
-		<h3>Current Bid: {{money auction.price}} by {{auction.highestBidder}}</h3>
-		<form class="bid">
-			{{#if error}}
-			<div class="alert alert-error">{{error}}</div>
-			{{/if}}
-			<input type="text" name="bid" value="0">
-			<input type="submit" class="btn" value="Bid">
-		</form>
-		{{> auction_page_bid_info}}
-	{{/if}}
-</template>
-
-<template name="auction_page_bid_info">
-	<h5># of Bids: {{auction.bids}}</h5>
-	<h5>Last Bid: {{timeago auction.last_bid}}</h5>
-	<ul>
-	{{#each bids}}
-		<li>{{money value}} by {{ownerName}}</li>
-	{{/each}}
-	</ul>
-</template>
-
-<template name="auction_list">
-  {{#if show}}
-    <div class="auction_list">
-      <h4>Auctions</h4>
-      <table class="table">
-        <thead>
-          <tr>
-            <th>Name</th>
-            <th>Current Bid</th>
-            <th># of Bids</th>
-            <th>Last Bid</th>
-          </tr>
-        </thead>
-        <tbody>
-          {{#each all}}
-            {{> auction_row}}
-          {{/each}}
-        </tbody>
-      </table>
-    </div>
-  {{/if}}
-</template>
-
-<template name="auction_row">
-  <tr class="auction {{is_selected}}">
-    <td><a class="local" href="/auction/{{_id}}" class="title">{{title}}</span></td>
-    <td>{{money price}}</td>
-    <td>{{bids}}</td>
-    <td>{{timeago last_bid}}</td>
-  </tr>
-</template>
-
-<template name="create_dialog">
-  {{#if show}}
-  <div class="mask"> </div>
-  <div class="modal">
-    <div class="modal-header btn-primary">
-      <button type="button" class="close cancel">&times;</button>
-      <h3>Create an Auction</h3>
-    </div>
-
-    <div class="modal-body">
-      {{#if error}}
-        <div class="alert alert-error">{{error}}</div>
-      {{/if}}
-			<p>The first few pieces of information we need are a title for the auction, as well as how long you're going to be around to complete the transaction.</p>
-      <label>Descriptive Title</label>
-      <input type="text" class="title span5">
-			<label>Type of Auction</label>
-			<select class="type">
-				<option value="unid">Unidentified Items Auction</option>
-			</select>
-			<label>Length of Auction</label>
-			<select class="duration">
-				<option value="60">60 Minutes</option>
-				<option value="30">30 Minutes</option>
-				<option value="15">15 Minutes</option>
-			</select>
-			<h4>Next Steps...</h4>
-			<p>Clicking "Create" will not automatically start your auction. On the next screen, you will configure exactly what is part of this auction and any other options.</p>
-    </div>
-
-    <div class="modal-footer">
-      <button class="btn cancel">Cancel</button>
-      <button class="btn btn-primary save">Create</button>
-    </div>
-  </div>
-  {{/if}}
 </template>
