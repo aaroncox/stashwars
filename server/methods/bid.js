@@ -37,6 +37,16 @@ Meteor.methods({
 						value: newValue
 					}
 				});
+				// Insert the bid that was outbid
+				var bid = Bids.insert({
+					auction: options.auction,
+					owner: this.userId,
+					ownerName: Meteor.user().username,
+					value: value,
+					maxValue: value,
+					time: timestamp
+				});
+				
 				Auctions.update( query, {
 					$set: {
 						price: newValue,
