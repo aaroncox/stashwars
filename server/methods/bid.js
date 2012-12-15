@@ -33,7 +33,7 @@ Meteor.methods({
 			if( lastBid && (value + inc) <= lastBid.maxValue ) {
 				Bids.update( { _id: auction.bidId }, {
 					$set: {
-						value: value
+						value: value + inc
 					}
 				});
 				Auctions.update( query, {
