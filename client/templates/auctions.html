@@ -86,9 +86,15 @@
   <tr class="auction {{is_selected}}">
     <td><a class="local" href="/auction/{{_id}}" class="title">{{title}}</span></td>
 		<td class="item">
-			<span class='icon rare'>1</span>
-			<span class='icon legendary'>1</span>
-			<span class='icon set'>1</span>
+			{{#if itemCount this "rare"}}
+			<span class='icon rare'>{{itemCount this "rare"}}</span>
+			{{/if}}
+			{{#if itemCount this "legendary"}}
+			<span class='icon legendary'>{{itemCount this "legendary"}}</span>
+			{{/if}}
+			{{#if itemCount this "set"}}
+			<span class='icon set'>{{itemCount this "set"}}</span>
+			{{/if}}
 		</td>
     <td>{{ownerName}}</td>
     <td>{{money price}}</td>
