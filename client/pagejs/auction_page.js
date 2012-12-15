@@ -21,6 +21,17 @@ Template.auction_page.error = function() {
 	return Session.get( "auction_page_bid_error" );
 };
 
+Template.auction_page.highestBidder = function() {
+	var current = auction();
+	if(!current) {
+		return;
+	}
+	if(current.highestBidderId == Meteor.user()._id) {
+		var bid = Bids.findOne(current.bidId, {maxValue: 1});
+		return bid && bid.maxValue;		
+	}
+};
+
 Template.auction_page.events({
 	'submit .bid': function ( event, template ) {
 		var input = template.find("input[name='bid']"),
