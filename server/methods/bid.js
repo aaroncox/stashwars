@@ -30,7 +30,7 @@ Meteor.methods({
 			// Find the last bid that was on the auction
 			var	lastBid = Bids.findOne({ _id: auction.bidId });
 			// If our new bid is LESS THAN the last bidders maxBid, update the auction and throw.
-			if( lastBid ) {
+			if( lastBid && lastBid.maxValue < value ) {
 				var newValue = Math.min(lastBid.maxValue, value + inc);
 				Bids.update( { _id: auction.bidId }, {
 					$set: {
@@ -56,6 +56,7 @@ Meteor.methods({
 						bids: 1
 					}
 				});
+				
 				throw new Meteor.Error(409, "Your bid was automatically outbid.");
 			}
 			// If we had a last bid, jump over it by the inc
