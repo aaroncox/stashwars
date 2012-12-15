@@ -21,7 +21,7 @@ Meteor.methods({
 			throw new Meteor.Error(409, "You can't outbid yourself");
 		}
 		if ( value > auction.price ) {
-			var inc = 5,
+			var inc = auction.increment || 1,
 					minPrice = auction.price + inc;
 			// Our bid isn't high enough for the increment value, throw an error.
 			if( minPrice > value ) {
