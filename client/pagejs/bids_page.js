@@ -7,5 +7,9 @@ Template.bids_page.bids = function() {
 	return Bids.find({}, {sort: {time: -1}});
 };
 Template.bids_page.auctionTitle = function(auction) {
-	return Auctions.findOne( auction ).title;
+	var a = Auctions.findOne( auction );
+	if(!a) {
+		return false;
+	}
+	return a.title;
 };
