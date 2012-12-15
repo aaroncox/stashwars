@@ -9,7 +9,7 @@ Template.bids_page.bids = function() {
 Template.bids_page.auctionTitle = function(auction) {
 	var a = Auctions.findOne( auction );
 	if(!a) {
-		return false;
+		return '';
 	}
 	return a.title;
 };
