@@ -34,15 +34,19 @@
 		{{else}}
 		<h3>No bids</h3>
 		{{/if}}
-		{{#unless isOwner}}
-		<form class="bid form-inline">
-			{{#if error}}
-			<div class="alert alert-error">{{error}}</div>
-			{{/if}}
-			<input type="text" name="bid" value="0">
-			<input type="submit" class="btn" value="Bid">
-		</form>
-		{{/unless}}
+		{{#if user}}
+			{{#unless isOwner}}
+			<form class="bid form-inline">
+				{{#if error}}
+				<div class="alert alert-error">{{error}}</div>
+				{{/if}}
+				<input type="text" name="bid" value="0">
+				<input type="submit" class="btn" value="Bid">
+			</form>
+			{{/unless}}
+		{{else}}
+		<input type="text" value="Login to Bid" disabled="disabled">
+		{{/if}}
 		{{> auction_page_bid_info}}
   </div>
   <div class="span8">
@@ -196,7 +200,8 @@
 			</form>
 		</div>
 		{{else}}
-		<div class="alert">
+		<div class="alert alert-error">
+			<button id="stop" class="btn btn-danger pull-right">Stop Auction</button>				  	
 			<h5>Bidding has started, you can no longer modify the auction.</h5>
 		</div>
 		{{/if}}
