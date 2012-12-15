@@ -64,7 +64,7 @@ Meteor.methods({
 				minPrice = lastBid.maxValue + inc;				
 			} else {
 				// Otherwise start with default value
-				minPrice = 5;		// TODO - This should be the starting value of the auction probably
+				minPrice = auction.minbid || inc || 1;
 			}
 			// Create the Bid
 			var bid = Bids.insert({
