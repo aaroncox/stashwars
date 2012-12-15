@@ -14,6 +14,9 @@ Meteor.methods({
 		if(!this.userId) {
 			throw new Meteor.Error(500, "You must be logged in to bid on auctions.");
 		}
+		if( value % auction.increment ) {
+			throw new Meteor.Error(409, "Your bid must be a multiple of " + auction.increment);			
+		}
 		if(this.userId === auction.owner) {
 			throw new Meteor.Error(409, "You can't bid on your own auctions");
 		}
@@ -30,7 +33,8 @@ Meteor.methods({
 			// Find the last bid that was on the auction
 			var	lastBid = Bids.findOne({ _id: auction.bidId });
 			// If our new bid is LESS THAN the last bidders maxBid, update the auction and throw.
-			if( lastBid && lastBid.maxValue >= value ) {
+			if( lastBid && lastBid.maxValue >= value - inc) {
+				
 				var newValue = Math.min(lastBid.maxValue, value + inc);
 				Bids.update( { _id: auction.bidId }, {
 					$set: {
