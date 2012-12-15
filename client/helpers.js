@@ -6,7 +6,7 @@
 Handlebars.registerHelper('selected', function(val, option) {
 	return val == option ? ' selected' : '';
 });
-//Useful for checking sesstion variables in templates
+//Useful for checking session variables in templates
 Handlebars.registerHelper('if_session', function(name, options) {
 	if (Session.get(name))
 		return options.fn(Session.get(name));

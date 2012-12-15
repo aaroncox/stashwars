@@ -1,9 +1,11 @@
+Meteor.subscribe("my-auctions");
+
 Template.user_profile.regions = function () {
 	return [ "Americas", "Europe", "Asia" ];
 }
 
 Template.user_profile.myAuctions = function() {
-	return Auctions.find({ owner: Meteor.userId() }, { sort: { _id: -1 } });
+	return Auctions.find({ owner: Meteor.userId() }, { sort: { createdAt: -1 } });
 }
 
 Template.user_profile.events = {

@@ -31,7 +31,8 @@ Meteor.methods({
 			price: 0,
 			bids: 0,
 			items: [],
-			duration: options.duration
+			duration: options.duration,
+			createdAt: new Date().getTime()
 		});
 	},
 	addItem: function(options) {

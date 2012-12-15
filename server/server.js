@@ -10,6 +10,12 @@ Meteor.publish("bids-recent", function( auctionId ) {
 	return Bids.find({}, {limit: 20, sort: {time: -1}});
 });
 
+Meteor.publish("my-auctions", function() {
+  var userId = this.userId;
+  console.log(Auctions.find({ owner: userId }));
+  return Auctions.find({ owner: userId }, { sort: { createdAt: -1 } });
+});
+
 Accounts.validateNewUser(function (user) {
   if (user.username && user.username.length >= 3 && user.username.length <= 16)
     return true;
