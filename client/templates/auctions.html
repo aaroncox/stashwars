@@ -34,7 +34,7 @@
 		{{else}}
 		<h3>No bids</h3>
 		{{/if}}
-		{{#if user}}
+		{{#if currentUser}}
 			{{#unless isOwner}}
 			<form class="bid form-inline">
 				{{#if error}}
@@ -45,7 +45,7 @@
 			</form>
 			{{/unless}}
 		{{else}}
-		<input type="text" value="Login to Bid" disabled="disabled">
+			<input type="text" value="Login to Bid" disabled="disabled">
 		{{/if}}
 		{{> auction_page_bid_info}}
   </div>
