@@ -29,7 +29,7 @@
 		{{#if auction.highestBidder}}		
 			<h3>Current Bid: {{money auction.price}} by {{auction.highestBidder}}</h3>
 			{{#if highestBidder}}
-				<h3>Your Max Bid: {{highestBidder}}</h3>
+				<h3>Your Max Bid: {{money highestBidder}}</h3>
 			{{/if}}
 		{{else}}
 		<h3>No bids</h3>
