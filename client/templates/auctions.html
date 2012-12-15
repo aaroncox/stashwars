@@ -24,8 +24,8 @@
 <template name="auction_page">
   <div class="span4 well" >
 		<h1>{{auction.title}}</h1>
-		Increment: {{auction.increment}}
-		Min Bid: {{auction.minbid}}
+		Increment: {{money auction.increment}}
+		Min Bid: {{money auction.minbid}}
 		{{#if auction.highestBidder}}		
 			<h3>Current Bid: {{money auction.price}} by {{auction.highestBidder}}</h3>
 			{{#if highestBidder}}
@@ -174,14 +174,14 @@
 							<input class='auction_property' type="text" name="minbid" placeholder="Minimum Bid (Default = 0)">
 							<label>Bid Increment</label>
 							<select class='auction_property' name="increment" placeholder="Bid Incremenent">
-								<option value="5">5k</option>
-								<option value="10">10k</option>
-								<option value="25">25k</option>
-								<option value="50">50k</option>
-								<option value="100">100k</option>
-								<option value="200">200k</option>
-								<option value="250">250k</option>
-								<option value="500">500k</option>
+								<option value="5000">5k</option>
+								<option value="10000">10k</option>
+								<option value="25000">25k</option>
+								<option value="50000">50k</option>
+								<option value="100000">100k</option>
+								<option value="200000">200k</option>
+								<option value="250000">250k</option>
+								<option value="500000">500k</option>
 							</select>
 					  </div>
 					  <div class="span4">
