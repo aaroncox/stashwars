@@ -30,15 +30,16 @@ Meteor.methods({
 			// Find the last bid that was on the auction
 			var	lastBid = Bids.findOne({ _id: auction.bidId });
 			// If our new bid is LESS THAN the last bidders maxBid, update the auction and throw.
-			if( lastBid && (value + inc) <= lastBid.maxValue ) {
+			if( lastBid ) {
+				var newValue = Math.min(lastBid.maxValue, value + inc);
 				Bids.update( { _id: auction.bidId }, {
 					$set: {
-						value: value + inc
+						value: newValue
 					}
 				});
 				Auctions.update( query, {
 					$set: {
-						price: value + inc,
+						price: newValue,
 						last_bid: timestamp
 					},
 					$inc: {
