@@ -14,19 +14,39 @@ Template.auction_editor.itemError = function () {
   return Session.get("addItemError");
 };
 
-function auction() {
+function getAuction() {
 	var result = Auctions.findOne({
 		_id: Session.get( "auction-id" )
 	});
 	return result;
 }
 
-Template.auction_itemlist.auction = auction;
+function updateProperty(prop, value) {
+	var auction = getAuction(),
+			id = auction && auction._id,
+			$set = {};
+	if(!auction || auction[prop] === value) {
+		return;
+	}
+	$set[prop] = value;
+	Auctions.update( id, { $set: $set } );
+}
+
+function updateEvent(event) {
+	var element = jQuery(event.target),
+			value = parseFloat(element.val()),
+			prop = event.target.name;
+	updateProperty(prop, value);
+}
+
+Template.auction_itemlist.auction = getAuction;
 
 Template.auction_editor.events = {
 	'submit': function(e) {
 		return e.preventDefault();
 	},
+	'change .auction_property': updateEvent,
+	'keyup .auction_property': _.debounce(updateEvent, 1500),
   'click #save': function (event) {
 	},
   'click #start': function (event) {

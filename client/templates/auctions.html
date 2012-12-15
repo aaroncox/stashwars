@@ -24,6 +24,8 @@
 <template name="auction_page">
   <div class="span4 well" >
 		<h1>{{auction.title}}</h1>
+		Increment: {{auction.increment}}
+		Min Bid: {{auction.minbid}}
 		{{#if auction.highestBidder}}
 		<h3>Current Bid: {{money auction.price}} by {{auction.highestBidder}}</h3>
 		{{else}}
@@ -157,14 +159,18 @@
 			        <div class="alert alert-error">{{itemError}}</div>
 			      {{/if}}
 					  <div class="span4">
-							<label>Auction ends at</label>
-							<input type="text" id="endtime" placeholder="Pick when the auction will end">
+							<label>Auction Duration</label>
+							<select class='auction_property' name="duration">
+								<option value="30m">30 Minutes</option>
+								<option value="1h">1 Hour</option>
+								<option value="2h">2 Hours</option>
+							</select>
 					  </div>
 					  <div class="span4">
 						  <label>Minimum Bid</label>
-							<input type="text" id="minbid" placeholder="Minimum Bid (Default = 0)">
+							<input class='auction_property' type="text" name="minbid" placeholder="Minimum Bid (Default = 0)">
 							<label>Bid Increment</label>
-							<select id="incremenent" placeholder="Bid Incremenent">
+							<select class='auction_property' name="increment" placeholder="Bid Incremenent">
 								<option value="5">5k</option>
 								<option value="10">10k</option>
 								<option value="25">25k</option>
