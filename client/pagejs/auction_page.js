@@ -23,7 +23,7 @@ Template.auction_page.error = function() {
 
 Template.auction_page.highestBidder = function() {
 	var current = auction();
-	if(!current) {
+	if(!current || !Meteor.user()) {
 		return;
 	}
 	if(current.highestBidderId == Meteor.user()._id) {
