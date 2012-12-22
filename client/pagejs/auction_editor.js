@@ -65,7 +65,7 @@ Template.auction_editor.events = {
 		return e.preventDefault();
 	},
 	'change .auction_property': updateEvent,
-	'keyup .auction_property': _.debounce(updateEvent, 1500),
+	'keyup .auction_property': _.debounce(updateEvent, 500),
   'click #save': function (event) {
 	},
   'click #start': function (event) {
