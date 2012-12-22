@@ -16,7 +16,7 @@
               <label class="control-label" for="region">Region</label>
               <div class="controls">
                 <select class="span8 region" id="region">
-                  {{#each regions}}
+                  {{#each global "regions"}}
                   <option {{selected this currentUser.profile.region}}>{{this}}</option>
                   {{/each}}
                 </select>

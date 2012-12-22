@@ -12,6 +12,9 @@ Handlebars.registerHelper('if_session', function(name, options) {
 		return options.fn(Session.get(name));
 	return "";
 });
+Handlebars.registerHelper("global", function(name) {
+	return global[name];
+});
 Handlebars.registerHelper("itemCount", function(auction, filter) {
 	if(!auction || !auction.items) {
 		return 0;
