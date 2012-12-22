@@ -14,6 +14,20 @@ Template.auction_editor.itemError = function () {
   return Session.get("addItemError");
 };
 
+Template.auction_editor.auction = function () {
+  return Template.auction_page.auction();
+};
+
+Template.auction_editor.auctionDurations = function () {
+  return global.auctionDurations;
+};
+
+Template.auction_editor.bidIncrements = function () {
+  return global.bidIncrements;
+};
+
+Template.auction_editor.preserve(['#quantity']);
+
 function getAuction() {
 	var result = Auctions.findOne({
 		_id: Session.get( "auction-id" )
@@ -29,7 +43,12 @@ function updateProperty(prop, value) {
 		return;
 	}
 	$set[prop] = value;
-	Auctions.update( id, { $set: $set } );
+  Meteor.call('SaveAuction', {
+    id: id,
+    $set: $set
+  }, function (error) {
+    //Empty for now
+  });
 }
 
 function updateEvent(event) {
@@ -54,7 +73,7 @@ Template.auction_editor.events = {
   'click #add': function (event, template) {
 		var itemSlug = template.find("#item").value,
 				quantity = parseInt(template.find("#quantity").value),
-        item = _.find(itemData, function(i){ return i.slug == itemSlug; });
+        item = _.find(global.itemData, function(i){ return i.slug == itemSlug; });
     // Ensure an item is selected
     if(!item) {
       Session.set("addItemError",

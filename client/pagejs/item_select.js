@@ -12,7 +12,7 @@ Handlebars.registerHelper("key_value", function(obj, fn) {
 });
 
 Template.item_select.items = function() {
-	return _.map(itemData, function(item) {
+	return _.map(global.itemData, function(item) {
 		return {
 			slug: item.slug,
 			name: item.name

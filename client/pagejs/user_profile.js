@@ -1,7 +1,7 @@
 Meteor.subscribe("my-auctions");
 
 Template.user_profile.regions = function () {
-	return [ "Americas", "Europe", "Asia" ];
+	return global.regions;
 }
 
 Template.user_profile.myAuctions = function() {

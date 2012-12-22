@@ -4,6 +4,7 @@
 
 //Convenient helper for selecting default option
 Handlebars.registerHelper('selected', function(val, option) {
+	console.log({a:val, b:option});
 	return val == option ? ' selected' : '';
 });
 //Useful for checking session variables in templates

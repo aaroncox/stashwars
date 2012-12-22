@@ -12,7 +12,6 @@ Meteor.publish("bids-recent", function( auctionId ) {
 
 Meteor.publish("my-auctions", function() {
   var userId = this.userId;
-  console.log(Auctions.find({ owner: userId }));
   return Auctions.find({ owner: userId }, { sort: { createdAt: -1 } });
 });
 

@@ -167,33 +167,28 @@
 			      {{/if}}
 					  <div class="span4">
 							<label>Auction Duration</label>
-							<select class='auction_property' name="duration">
-								<option value="30m">30 Minutes</option>
-								<option value="1h">1 Hour</option>
-								<option value="2h">2 Hours</option>
+							<select class='auction_property' id="duration" name="duration">
+                {{#each auctionDurations}}
+                <option value="{{value}}" {{selected value auction.duration}}>{{name}}</option>
+                {{/each}}
 							</select>
 					  </div>
 					  <div class="span4">
 						  <label>Minimum Bid</label>
-							<input class='auction_property' type="text" name="minbid" placeholder="Minimum Bid (Default = 0)">
+							<input class='auction_property' type="text" id="minbid" name="minbid" placeholder="Minimum Bid (Default = 0)" value="{{auction.minbid}}">
 							<label>Bid Increment</label>
 							<select class='auction_property' name="increment" placeholder="Bid Incremenent">
-								<option value="5000">5k</option>
-								<option value="10000">10k</option>
-								<option value="25000">25k</option>
-								<option value="50000">50k</option>
-								<option value="100000">100k</option>
-								<option value="200000">200k</option>
-								<option value="250000">250k</option>
-								<option value="500000">500k</option>
+								{{#each bidIncrements}}
+                <option value="{{value}}" {{selected value auction.increment}}>{{name}}</option>
+                {{/each}}
 							</select>
 					  </div>
 					  <div class="span4">
 						  <label>Pick an Unidentified Item...</label>
 							{{> item_select}}		  					  	
 					    <label>and pick how many...</label>
-							<input type="text" id="quantity" value="1">
-					    <button type="submit" id="add" class="btn btn-success">Add Items to Auction</button>				  	
+							<input type="text" id="quantity" value="1"><br />
+					    <button type="submit" id="add" class="btn btn-success">Add Items to Auction</button>
 					  </div>
 					</div>
 			  </fieldset>
