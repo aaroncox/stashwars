@@ -32,6 +32,14 @@ Template.auction_page.highestBidder = function() {
 	}
 };
 
+Template.create_dialog.auctionDurations = function () {
+  return global.auctionDurations;
+};
+
+Template.create_dialog.bidIncrements = function () {
+  return global.bidIncrements;
+};
+
 Template.auction_page.events({
 	'submit .bid': function ( event, template ) {
 		var input = template.find("input[name='bid']"),

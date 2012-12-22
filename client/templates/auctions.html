@@ -121,32 +121,57 @@
       <button type="button" class="close cancel">&times;</button>
       <h3>Create an Auction</h3>
     </div>
+    <form class="form-horizontal" style="margin:0">
+      <fieldset>
+        <div class="modal-body">
+          {{#isolate}}
+          {{#if_session "errorMsg"}}
+          <div class="alert alert-error">{{this}}</div>
+          {{/if_session}}
+          {{/isolate}}
+          <div class="control-group">
+            <label class="control-label" for="title">Title:</label>
+            <div class="controls">
+              <input type="text" id="title" class="span7">
+            </div>
+          </div>
+          <div class="control-group">
+      			<label class="control-label" for="duration">Duration</label>
+            <div class="controls">
+        			<select id="duration">
+        				{{#each auctionDurations}}
+                <option value="{{value}}">{{name}}</option>
+                {{/each}}
+        			</select>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="increment">Increment</label>
+            <div class="controls">
+              <select id="increment">
+                {{#each bidIncrements}}
+                <option value="{{value}}">{{name}}</option>
+                {{/each}}
+              </select>
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="minbid">Min Bid:</label>
+            <div class="controls">
+              <input type="text" id="minbid" class="span7">
+            </div>
+          </div>
 
-    <div class="modal-body">
-      {{#if error}}
-        <div class="alert alert-error">{{error}}</div>
-      {{/if}}
-			<p>The first few pieces of information we need are a title for the auction, as well as how long you're going to be around to complete the transaction.</p>
-      <label>Descriptive Title</label>
-			<input type="text" class="title span5">
-			<label>Type of Auction</label>
-			<select class="type">
-				<option value="unid">Unidentified Items Auction</option>
-			</select>
-			<label>Length of Auction</label>
-			<select class="duration">
-				<option value="60">60 Minutes</option>
-				<option value="30">30 Minutes</option>
-				<option value="15">15 Minutes</option>
-			</select>
-			<h4>Next Steps...</h4>
-			<p>Clicking "Create" will not automatically start your auction. On the next screen, you will configure exactly what is part of this auction and any other options.</p>
-    </div>
+    			<p>You can add items and review your auction in the next step.</p>
+        </div>
 
-    <div class="modal-footer">
-      <button class="btn cancel">Cancel</button>
-      <button class="btn btn-primary save">Create</button>
-    </div>
+        <div class="modal-footer">
+          <button class="btn cancel">Cancel</button>
+          <button class="btn btn-primary save">Create</button>
+        </div>
+      </fieldset>
+    </form>
+
   </div>
   {{/if}}
 </template>
