@@ -13,8 +13,8 @@ Template.user_profile.events = {
 		return event.preventDefault();
 	},
 	'click #save': function (event, template) {
-		var region    = template.find("#region").value;
-		var battletag = template.find("#battletag").value;
+		var region    = template.find(".region").value;
+		var battletag = template.find(".battletag").value;
 		Meteor.call('SaveUserProfile', {
 			region: region,
 			battletag: battletag

@@ -19,10 +19,10 @@ Template.create_dialog.events({
   },
   'click .save': function (event, template) {
     var data = {
-      title:    template.find("#title").value,
-      duration: template.find("#duration").value,
-      increment: template.find("#increment").value,
-      minbid:   template.find("#minbid").value,
+      title:    template.find(".title").value,
+      duration: template.find(".duration").value,
+      increment: template.find(".increment").value,
+      minbid:   template.find(".minbid").value,
     };
     
     Meteor.call('createAuction', data, function (error, auction) {

@@ -13,9 +13,9 @@
             <div class="alert alert-success">{{this}}</div>
             {{/if_session}}
             <div class="control-group">
-              <label class="control-label" for="email">Region</label>
+              <label class="control-label" for="region">Region</label>
               <div class="controls">
-                <select class="span8" id="region">
+                <select class="span8 region" id="region">
                   {{#each regions}}
                   <option {{selected this currentUser.profile.region}}>{{this}}</option>
                   {{/each}}
@@ -25,7 +25,7 @@
             <div class="control-group">
               <label class="control-label" for="battletag">BattleTag</label>
               <div class="controls">
-                <input type="text" class="span8" id="battletag" placeholder="i.e. Cain#1742" value="{{currentUser.profile.battletag}}">
+                <input type="text" class="span8 battletag" id="battletag" placeholder="i.e. Cain#1742" value="{{currentUser.profile.battletag}}">
               </div>
             </div>
             <div class="control-group">
